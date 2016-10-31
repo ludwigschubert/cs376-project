@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EC1DC6E74000740F87 /* AppDelegate.swift */; };
+		02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EE1DC6E74000740F87 /* ViewController.swift */; };
+		02F060F11DC6E74000740F87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F060F01DC6E74000740F87 /* Assets.xcassets */; };
+		02F060F41DC6E74000740F87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F060F21DC6E74000740F87 /* Main.storyboard */; };
+		02F060FD1DC6E75E00740F87 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F060FC1DC6E75E00740F87 /* CoreBluetooth.framework */; };
+		02F060FF1DC6F0CC00740F87 /* HeartRateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */; };
+		02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */; };
+		02F0611C1DC7043C00740F87 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F061171DC7041E00740F87 /* Charts.framework */; };
+		02F0611D1DC7043C00740F87 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02F061171DC7041E00740F87 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		02F061161DC7041E00740F87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F061101DC7041E00740F87 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F241D8110E600722320;
+			remoteInfo = Charts;
+		};
+		02F061181DC7041E00740F87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F061101DC7041E00740F87 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06B120D51D811E6200D14B02;
+			remoteInfo = ChartsRealm;
+		};
+		02F0611A1DC7041E00740F87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F061101DC7041E00740F87 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06165F2E1D8110E600722320;
+			remoteInfo = ChartsTests;
+		};
+		02F0611E1DC7043C00740F87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02F061101DC7041E00740F87 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 06165F231D8110E600722320;
+			remoteInfo = Charts;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		02F061201DC7043C00740F87 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				02F0611D1DC7043C00740F87 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopHeartRateMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02F060EC1DC6E74000740F87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		02F060EE1DC6E74000740F87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		02F060F01DC6E74000740F87 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02F060F31DC6E74000740F87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		02F060F51DC6E74000740F87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02F060FC1DC6E75E00740F87 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateSession.swift; sourceTree = "<group>"; };
+		02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateSessionWriter.swift; sourceTree = "<group>"; };
+		02F061101DC7041E00740F87 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02F060E61DC6E74000740F87 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02F060FD1DC6E75E00740F87 /* CoreBluetooth.framework in Frameworks */,
+				02F0611C1DC7043C00740F87 /* Charts.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02F060E01DC6E74000740F87 = {
+			isa = PBXGroup;
+			children = (
+				02F060EB1DC6E74000740F87 /* DesktopHeartRateMonitor */,
+				02F060EA1DC6E74000740F87 /* Products */,
+				02F060FB1DC6E75E00740F87 /* Frameworks */,
+				02F061101DC7041E00740F87 /* Charts.xcodeproj */,
+			);
+			sourceTree = "<group>";
+		};
+		02F060EA1DC6E74000740F87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02F060EB1DC6E74000740F87 /* DesktopHeartRateMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				02F060EC1DC6E74000740F87 /* AppDelegate.swift */,
+				02F060EE1DC6E74000740F87 /* ViewController.swift */,
+				02F060F01DC6E74000740F87 /* Assets.xcassets */,
+				02F060F21DC6E74000740F87 /* Main.storyboard */,
+				02F060F51DC6E74000740F87 /* Info.plist */,
+				02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */,
+				02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */,
+			);
+			path = DesktopHeartRateMonitor;
+			sourceTree = "<group>";
+		};
+		02F060FB1DC6E75E00740F87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				02F060FC1DC6E75E00740F87 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		02F061111DC7041E00740F87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02F061171DC7041E00740F87 /* Charts.framework */,
+				02F061191DC7041E00740F87 /* ChartsRealm.framework */,
+				02F0611B1DC7041E00740F87 /* ChartsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		02F060E81DC6E74000740F87 /* DesktopHeartRateMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02F060F81DC6E74000740F87 /* Build configuration list for PBXNativeTarget "DesktopHeartRateMonitor" */;
+			buildPhases = (
+				02F060E51DC6E74000740F87 /* Sources */,
+				02F060E61DC6E74000740F87 /* Frameworks */,
+				02F060E71DC6E74000740F87 /* Resources */,
+				02F061201DC7043C00740F87 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02F0611F1DC7043C00740F87 /* PBXTargetDependency */,
+			);
+			name = DesktopHeartRateMonitor;
+			productName = DesktopHeartRateMonitor;
+			productReference = 02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		02F060E11DC6E74000740F87 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Ludwig Schubert";
+				TargetAttributes = {
+					02F060E81DC6E74000740F87 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = CD6WSVH5P2;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 02F060E41DC6E74000740F87 /* Build configuration list for PBXProject "DesktopHeartRateMonitor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 02F060E01DC6E74000740F87;
+			productRefGroup = 02F060EA1DC6E74000740F87 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 02F061111DC7041E00740F87 /* Products */;
+					ProjectRef = 02F061101DC7041E00740F87 /* Charts.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				02F060E81DC6E74000740F87 /* DesktopHeartRateMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		02F061171DC7041E00740F87 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = 02F061161DC7041E00740F87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02F061191DC7041E00740F87 /* ChartsRealm.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ChartsRealm.framework;
+			remoteRef = 02F061181DC7041E00740F87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02F0611B1DC7041E00740F87 /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = 02F0611A1DC7041E00740F87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		02F060E71DC6E74000740F87 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02F060F11DC6E74000740F87 /* Assets.xcassets in Resources */,
+				02F060F41DC6E74000740F87 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		02F060E51DC6E74000740F87 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */,
+				02F060FF1DC6F0CC00740F87 /* HeartRateSession.swift in Sources */,
+				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
+				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		02F0611F1DC7043C00740F87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = 02F0611E1DC7043C00740F87 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		02F060F21DC6E74000740F87 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02F060F31DC6E74000740F87 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		02F060F61DC6E74000740F87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		02F060F71DC6E74000740F87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		02F060F91DC6E74000740F87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.stanford.cs.cs376.stress-mindset.DesktopHeartRateMonitor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		02F060FA1DC6E74000740F87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.stanford.cs.cs376.stress-mindset.DesktopHeartRateMonitor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02F060E41DC6E74000740F87 /* Build configuration list for PBXProject "DesktopHeartRateMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02F060F61DC6E74000740F87 /* Debug */,
+				02F060F71DC6E74000740F87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02F060F81DC6E74000740F87 /* Build configuration list for PBXNativeTarget "DesktopHeartRateMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02F060F91DC6E74000740F87 /* Debug */,
+				02F060FA1DC6E74000740F87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 02F060E11DC6E74000740F87 /* Project object */;
+}
