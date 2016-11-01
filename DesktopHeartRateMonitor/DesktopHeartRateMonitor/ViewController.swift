@@ -17,6 +17,12 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     let lineChartData = LineChartData()
     let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
 
+    var seconds = 0
+    var secondTimer: Timer?
+    var currentQuestion: Question?
+    var currentStartTime: NSDate?
+    var questionsIterator: IndexingIterator<Array<Question>>?
+
     var centralManager: CBCentralManager?
     var peripheral: CBPeripheral?
     var heartRateSession: HeartRateSession = HeartRateSession.init()
@@ -24,7 +30,12 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var bpmLabel: NSTextField!
     @IBOutlet weak var participantNameTextField: NSTextField!
     @IBOutlet weak var lineChartView: LineChartView!
-
+    @IBOutlet weak var questionLabel: NSTextField!
+    @IBOutlet weak var questionTextField: NSTextField!
+    @IBOutlet weak var answerLabel: NSTextField!
+    @IBOutlet weak var answerTextView: NSTextView!
+    @IBOutlet weak var timerLabel: NSTextField!
+    
     //MARK:- NSViewController Methods
 
     override func viewDidLoad() {
@@ -35,6 +46,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.applicationWillTerminateNotification), name: NSNotification.Name.NSApplicationWillTerminate, object: nil)
 
+        // Set up Chart
         lineChartView.leftAxis.drawLabelsEnabled = false
         lineChartView.chartDescription?.text = ""
         lineChartView.gridBackgroundColor = NSUIColor.white
@@ -49,12 +61,25 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         lineChartData.addDataSet(lineChartDataSet);
         lineChartView.data = lineChartData
 
+        // Set up Question
+        questionsIterator = Question.examples().makeIterator()
+        secondTimer = Timer.init(timeInterval: 1.0, repeats: true, block: {
+            _ in self.timerWasFired()
+        })
+        RunLoop.current.add(secondTimer!, forMode: RunLoopMode.commonModes)
+
     }
 
     func applicationWillTerminateNotification() {
         print("Received applicationWillTerminateNotification, saving…");
         heartRateSession.end()
         HeartRateSessionWriter.write(heartRateSession: heartRateSession)
+    }
+
+    override func viewWillAppear() {
+        if let question = questionsIterator!.next() {
+            show(question: question)
+        }
     }
 
     //MARK:- CoreBluetooth Manager Delegate
@@ -139,7 +164,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                     }
                 }
 
-                if let actualBpm = bpm{
+                if let actualBpm = bpm {
                     //print("Received Heart Rate: \(actualBpm) Bpm")
                     bpmLabel.stringValue = "\(actualBpm) bpm"
                     heartRateSession.record(bpmValue: Int(actualBpm));
@@ -154,7 +179,35 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     //MARK:- IBActions
 
-    @IBAction func saveButtonWasPressed(_ sender: NSButtonCell) {
+    @IBAction func submitButtonWasPressed(_ sender: NSButton)
+    {
+        let originalColor = self.answerTextView.backgroundColor
+
+        let answer = answerTextView.string?.trimmingCharacters(in: .whitespaces)
+        let gotAnswerCorrect = answer == currentQuestion?.answer
+        let timeInterval = currentStartTime!.timeIntervalSinceNow
+        if gotAnswerCorrect {
+            self.answerTextView.backgroundColor = NSColor.green
+        } else {
+            self.answerTextView.backgroundColor = NSColor.red
+        }
+        heartRateSession.record(gotAnswerCorrect: gotAnswerCorrect, afterTimeInterval: timeInterval)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3),
+                                      execute: {
+                                        self.answerTextView.backgroundColor = originalColor
+
+                                        if let question = self.questionsIterator!.next() {
+                                            self.show(question: question)
+                                        } else {
+                                            // show end
+                                        }
+        })
+
+    }
+
+    @IBAction func saveButtonWasPressed(_ sender: NSButtonCell)
+    {
         heartRateSession.participantName = participantNameTextField.stringValue
         heartRateSession.end()
         HeartRateSessionWriter.write(heartRateSession: heartRateSession)
@@ -162,6 +215,20 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         lineChartDataSet.values = [];
         lineChartData.notifyDataChanged()
         lineChartView.notifyDataSetChanged()
+    }
+
+    //MARK:- Internal
+
+    func show(question: Question) {
+        currentQuestion = question
+        questionTextField.stringValue = question.text
+        answerTextView.string = ""
+        currentStartTime = NSDate.init()
+    }
+
+    func timerWasFired() {
+        seconds += 1
+        timerLabel.stringValue = "\(seconds)s"
     }
 
 

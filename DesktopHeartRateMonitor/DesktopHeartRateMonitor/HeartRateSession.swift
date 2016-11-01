@@ -17,10 +17,17 @@ class HeartRateSession: NSObject {
     var startedOn:Date;
     var endedOn:Date?;
     var participantName = "";
-    var bpmValues:[Int] = [];
+    var bpmValues:[(Int, Date)] = [];
+    var answers:[(Bool, TimeInterval)] = [];
 
-    func record(bpmValue:Int) {
-        bpmValues.append(bpmValue)
+    func record(bpmValue: Int) {
+        let entry = (bpmValue, Date.init())
+        bpmValues.append(entry)
+    }
+
+    func record(gotAnswerCorrect: Bool, afterTimeInterval: TimeInterval) {
+        let entry = (gotAnswerCorrect, afterTimeInterval)
+        answers.append(entry)
     }
 
     func end() {

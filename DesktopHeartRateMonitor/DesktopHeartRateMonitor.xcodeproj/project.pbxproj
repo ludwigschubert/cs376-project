@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021A47D51DC91F7700B980E7 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A47D41DC91F7700B980E7 /* Question.swift */; };
 		02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EC1DC6E74000740F87 /* AppDelegate.swift */; };
 		02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EE1DC6E74000740F87 /* ViewController.swift */; };
 		02F060F11DC6E74000740F87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F060F01DC6E74000740F87 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		021A47D41DC91F7700B980E7 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopHeartRateMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02F060EC1DC6E74000740F87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02F060EE1DC6E74000740F87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,8 +117,9 @@
 				02F060F01DC6E74000740F87 /* Assets.xcassets */,
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
-				02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */,
 				02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */,
+				02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */,
+				021A47D41DC91F7700B980E7 /* Question.swift */,
 			);
 			path = DesktopHeartRateMonitor;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				021A47D51DC91F7700B980E7 /* Question.swift in Sources */,
 				02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */,
 				02F060FF1DC6F0CC00740F87 /* HeartRateSession.swift in Sources */,
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,

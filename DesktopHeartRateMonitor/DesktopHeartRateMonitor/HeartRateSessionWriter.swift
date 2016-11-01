@@ -38,9 +38,15 @@ class HeartRateSessionWriter: NSObject {
         outputString += "started on " + heartRateSession.startedOn.description + "\n"
         outputString += "ended on " + heartRateSession.endedOn!.description + "\n"
 
-        outputString += heartRateSession.bpmValues.map { (bpm) -> String in
-            String(bpm)
+        outputString += heartRateSession.bpmValues.map { (bpm, date) -> String in
+            "\(bpm), \(date)"
         }.joined(separator: "\n")
+
+        outputString += "\n"
+
+        outputString += heartRateSession.answers.map { (correct, timeInterval) -> String in
+            "\(correct), \(timeInterval)"
+            }.joined(separator: "\n")
 
         return outputString
     }
