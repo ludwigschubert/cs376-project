@@ -20,10 +20,9 @@ class Question: NSObject {
 
     static func examples() -> Array<Question> {
         return [
-            Question.init(text: "40 + 2", answer: "42"),
-            Question.init(text: "Michael…", answer: "Bernstein"),
-            Question.init(text: "HC…", answer: "I"),
-            Question.init(text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.", answer: "Yes"),
+            Question.init(text: "/* Program B */\n int x = readInt(); \n if (x >= 10000) {\n   while (x != 0) {\n      if (x % 10 != 9) {\n         println('failure');\n      }\n    x /= 10; }\n   println('success');\n}\n\nWhat is the smallest integer value for which this program prints 'success'?", answer: "99999"),
+            Question.init(text: "private String mystery(String s) {\n String result = '';\n int len = s.length();\n int j = 0;\n int k = 9;\n while (j < k) {\nif (j < 4) {\n   result += s.charAt(k % len);\n}\nif (j / 2 != 1) {\n   result += s.charAt(j % len);\n}\nj++;\nk--; }\n return result;\n  }\n\nWhat is the value of mystery('abcdefg')?", answer: "cabbage"),
+            Question.init(text: "test", answer: "test")
         ]
     }
 }

@@ -27,14 +27,14 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var peripheral: CBPeripheral?
     var heartRateSession: HeartRateSession = HeartRateSession.init()
 
-    @IBOutlet weak var bpmLabel: NSTextField!
-    @IBOutlet weak var participantNameTextField: NSTextField!
-    @IBOutlet weak var lineChartView: LineChartView!
-    @IBOutlet weak var questionLabel: NSTextField!
-    @IBOutlet weak var questionTextField: NSTextField!
-    @IBOutlet weak var answerLabel: NSTextField!
-    @IBOutlet weak var answerTextView: NSTextView!
-    @IBOutlet weak var timerLabel: NSTextField!
+    @IBOutlet var bpmLabel: NSTextField!
+    @IBOutlet var participantNameTextField: NSTextField!
+    @IBOutlet var lineChartView: LineChartView!
+    @IBOutlet var questionLabel: NSTextField!
+    @IBOutlet var questionTextField: NSTextField!
+    @IBOutlet var answerLabel: NSTextField!
+    @IBOutlet var answerTextView: NSTextView!
+    @IBOutlet var timerLabel: NSTextField!
     
     //MARK:- NSViewController Methods
 
@@ -63,9 +63,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
         // Set up Question
         questionsIterator = Question.examples().makeIterator()
-        secondTimer = Timer.init(timeInterval: 1.0, repeats: true, block: {
-            _ in self.timerWasFired()
-        })
+        secondTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
         RunLoop.current.add(secondTimer!, forMode: RunLoopMode.commonModes)
 
     }
@@ -198,7 +196,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                                         self.answerTextView.backgroundColor = originalColor
 
                                         if let question = self.questionsIterator!.next() {
-                                            self.show(question: question)
+                                            if gotAnswerCorrect {
+                                                self.show(question: question)
+                                            }
                                         } else {
                                             // show end
                                         }
