@@ -7,13 +7,10 @@
 //
 
 import Cocoa
-import CoreBluetooth
 import Charts
 
-class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: NSViewController {
 
-    let heartRateServices = [CBUUID.init(string: "180A"), CBUUID.init(string: "180D")]
-    let heartRateCharacteristicUUID = CBUUID(string: "2A37")
     let lineChartData = LineChartData()
     let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
 
@@ -23,8 +20,6 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var currentStartTime: NSDate?
     var questionsIterator: IndexingIterator<Array<Question>>?
 
-    var centralManager: CBCentralManager?
-    var peripheral: CBPeripheral?
     var heartRateSession: HeartRateSession = HeartRateSession.init()
 
     @IBOutlet var bpmLabel: NSTextField!
@@ -35,14 +30,17 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet var answerLabel: NSTextField!
     @IBOutlet var answerTextView: NSTextView!
     @IBOutlet var timerLabel: NSTextField!
+
+    // TouchBArTests
+
+    let images = [NSImage(named: "AppIcon"), NSImage(named: "StatusBarIcon")]
+    dynamic var image : NSImage?
+    var count = 0
     
     //MARK:- NSViewController Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-        centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.applicationWillTerminateNotification), name: NSNotification.Name.NSApplicationWillTerminate, object: nil)
 
@@ -62,9 +60,20 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         lineChartView.data = lineChartData
 
         // Set up Question
+        answerTextView.isAutomaticTextCompletionEnabled = false
         questionsIterator = Question.examples().makeIterator()
         secondTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
         RunLoop.current.add(secondTimer!, forMode: RunLoopMode.commonModes)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
+        name: Notification.Name.receivedHeartRate, object: nil)
+
+        // TouchBarTests
+        self.image = self.images[0]
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { timer in
+            self.count += 1
+            self.image = self.images[self.count % 2]
+        }
 
     }
 
@@ -80,102 +89,18 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
     }
 
-    //MARK:- CoreBluetooth Manager Delegate
-    func centralManagerDidUpdateState(_ central: CBCentralManager)
-    {
-        if (central.state == CBCentralManagerState.poweredOn) {
-            print("Bluetooth is powered on!")
-            self.centralManager?.scanForPeripherals(withServices: heartRateServices, options: nil)
-        } else {
-            print("CBCentralManagerState not powered on?")
-        }
-    }
-
-    func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let name = advertisementData[CBAdvertisementDataLocalNameKey] {
-            print("Discovered: " + (name as! String))
-            bpmLabel.stringValue = "Connecting to \(peripheral.name!)…"
-            central.stopScan()
-            central.connect(peripheral)
-            self.peripheral = peripheral
-        }
-    }
-
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connected:", peripheral.name!)
-
-        self.peripheral!.delegate = self
-        self.peripheral!.discoverServices(heartRateServices);
-    }
-
-    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        print("Failed to Connect: ", peripheral)
-
-        central.scanForPeripherals(withServices: heartRateServices, options: nil)
-    }
-
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        print("Disconnected: ", peripheral)
-        bpmLabel.stringValue = "Disconnected from \(peripheral.name!), retrying…"
-        central.scanForPeripherals(withServices: heartRateServices, options: nil)
-    }
-
-    //MARK:- CoreBluetooth Peripheral Delegate
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?)
-    {
-        for service:CBService in peripheral.services! {
-            print("Discovered service: \(service.uuid.uuidString)")
-
-            peripheral.discoverCharacteristics(nil, for: service)
-        }
-    }
-
-
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
-    {
-        for characteristic:CBCharacteristic in service.characteristics! {
-            if characteristic.uuid == heartRateCharacteristicUUID {
-                peripheral.setNotifyValue(true, for: characteristic)
-                bpmLabel.stringValue = "Gathering Heart Rate…"
-                print("Subscribed to heart rate!\n")
-            }
-        }
-    }
-
-
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
-    {
-        if characteristic.uuid == heartRateCharacteristicUUID {
-            if let rate = characteristic.value {
-
-                var buffer = [UInt8](repeating: 0x00, count: rate.count)
-                rate.copyBytes(to: &buffer, count: buffer.count)
-
-                var bpm:UInt16?
-                if (buffer.count >= 2){
-                    if (buffer[0] & 0x01 == 0) {
-                        bpm = UInt16(buffer[1]);
-                    } else {
-                        bpm = UInt16(buffer[1]) << 8
-                        bpm =  bpm! | UInt16(buffer[2])
-                    }
-                }
-
-                if let actualBpm = bpm {
-                    //print("Received Heart Rate: \(actualBpm) Bpm")
-                    bpmLabel.stringValue = "\(actualBpm) bpm"
-                    heartRateSession.record(bpmValue: Int(actualBpm));
-                    let chartDataEntry = ChartDataEntry(x: Double(lineChartDataSet.entryCount), y: Double(actualBpm))
-                    let _ = lineChartDataSet.addEntry(chartDataEntry)
-                    lineChartData.notifyDataChanged()
-                    lineChartView.notifyDataSetChanged()
-                }
-            }
-        }
-    }
-
     //MARK:- IBActions
+
+    func didReceiveHeartRate(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let bpm = userInfo["bpm"] as! Int
+        bpmLabel.stringValue = "\(bpm) bpm"
+        heartRateSession.record(bpmValue: bpm);
+        let chartDataEntry = ChartDataEntry(x: Double(lineChartDataSet.entryCount), y: Double(bpm))
+        let _ = lineChartDataSet.addEntry(chartDataEntry)
+        lineChartData.notifyDataChanged()
+        lineChartView.notifyDataSetChanged()
+    }
 
     @IBAction func submitButtonWasPressed(_ sender: NSButton)
     {
