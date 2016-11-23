@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
@@ -95,46 +95,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="495" height="658"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="j0Z-5B-Zin" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="15" y="63" width="465" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="9h8-nZ-SVa"/>
-                                </constraints>
-                            </customView>
-                            <scrollView verticalCompressionResistancePriority="250" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="dark" translatesAutoresizingMaskIntoConstraints="NO" id="dW8-N7-WMp">
-                                <rect key="frame" x="20" y="201" width="455" height="337"/>
-                                <clipView key="contentView" id="lFI-az-ouy">
-                                    <rect key="frame" x="1" y="1" width="453" height="335"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="E53-pa-SZw">
-                                            <rect key="frame" x="0.0" y="0.0" width="453" height="335"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="453" height="335"/>
-                                            <size key="maxSize" width="463" height="10000000"/>
-                                            <attributedString key="textStorage">
-                                                <fragment content="Enter your answer here">
-                                                    <attributes>
-                                                        <font key="NSFont" size="12" name="Menlo-Regular"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        </textView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Z3s-KT-9Ok">
-                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="MR5-yi-Sfr">
-                                    <rect key="frame" x="438" y="1" width="16" height="335"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mjL-LD-1Gd">
                                 <rect key="frame" x="18" y="573" width="459" height="38"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="6sL-Ql-6w6">
@@ -242,14 +202,11 @@ DQ
                         <constraints>
                             <constraint firstItem="hDu-dv-Cpa" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="0tD-ut-XBN"/>
                             <constraint firstItem="vvS-ew-cVs" firstAttribute="top" secondItem="mjL-LD-1Gd" secondAttribute="bottom" constant="8" id="1cF-4d-Pj6"/>
-                            <constraint firstAttribute="trailing" secondItem="dW8-N7-WMp" secondAttribute="trailing" constant="20" id="6cm-2E-zuE"/>
+                            <constraint firstItem="su5-TZ-OFq" firstAttribute="top" secondItem="VlF-zQ-QGs" secondAttribute="bottom" constant="100" id="8Yu-W8-Ace"/>
                             <constraint firstItem="su5-TZ-OFq" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="A0C-JK-V3z"/>
-                            <constraint firstItem="j0Z-5B-Zin" firstAttribute="top" secondItem="VlF-zQ-QGs" secondAttribute="bottom" constant="9" id="FID-0K-mxH"/>
                             <constraint firstItem="mjL-LD-1Gd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="GFn-k1-5ov"/>
-                            <constraint firstItem="j0Z-5B-Zin" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="15" id="LP4-LN-apo"/>
                             <constraint firstItem="Mws-qX-4l5" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="LPz-6r-AbX"/>
-                            <constraint firstAttribute="trailing" secondItem="j0Z-5B-Zin" secondAttribute="trailing" constant="15" id="UUL-vt-CcN"/>
-                            <constraint firstItem="VlF-zQ-QGs" firstAttribute="top" secondItem="E53-pa-SZw" secondAttribute="bottom" constant="9" id="UjP-ph-pMW"/>
+                            <constraint firstItem="su5-TZ-OFq" firstAttribute="top" secondItem="hDu-dv-Cpa" secondAttribute="bottom" constant="102" id="U3J-7u-Sm9"/>
                             <constraint firstItem="IPc-Tg-w9R" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="-20" id="Yfn-Qa-gJc"/>
                             <constraint firstItem="vvS-ew-cVs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="22" id="ZvD-Eu-GLk"/>
                             <constraint firstItem="mjL-LD-1Gd" firstAttribute="top" secondItem="Mws-qX-4l5" secondAttribute="bottom" constant="8" id="aoL-Ul-U3U"/>
@@ -259,20 +216,15 @@ DQ
                             <constraint firstAttribute="trailing" secondItem="mjL-LD-1Gd" secondAttribute="trailing" constant="20" id="iMv-bu-5A1"/>
                             <constraint firstAttribute="trailing" secondItem="Mws-qX-4l5" secondAttribute="trailing" constant="20" id="k4H-cg-bS4"/>
                             <constraint firstAttribute="bottom" secondItem="IPc-Tg-w9R" secondAttribute="bottom" constant="-20" id="kJM-9L-7qW"/>
-                            <constraint firstItem="su5-TZ-OFq" firstAttribute="bottom" secondItem="j0Z-5B-Zin" secondAttribute="bottom" constant="10" id="may-MB-IsQ"/>
-                            <constraint firstItem="IPc-Tg-w9R" firstAttribute="top" secondItem="j0Z-5B-Zin" secondAttribute="bottom" constant="8" id="tHz-FN-wCN"/>
+                            <constraint firstItem="IPc-Tg-w9R" firstAttribute="top" secondItem="su5-TZ-OFq" secondAttribute="bottom" constant="-2" id="nfl-7z-KhT"/>
                             <constraint firstItem="hDu-dv-Cpa" firstAttribute="centerY" secondItem="VlF-zQ-QGs" secondAttribute="centerY" id="tk7-oZ-M5b"/>
-                            <constraint firstItem="dW8-N7-WMp" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="vMZ-vC-2Yb"/>
                             <constraint firstAttribute="trailing" secondItem="vvS-ew-cVs" secondAttribute="trailing" constant="20" id="wC1-BT-g5c"/>
                             <constraint firstAttribute="trailing" secondItem="IPc-Tg-w9R" secondAttribute="trailing" constant="-20" id="waH-UW-mVM"/>
-                            <constraint firstItem="E53-pa-SZw" firstAttribute="top" secondItem="vvS-ew-cVs" secondAttribute="bottom" constant="9" id="xk0-9n-5cH"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="answerLabel" destination="vvS-ew-cVs" id="Kng-OR-bES"/>
-                        <outlet property="answerTextView" destination="E53-pa-SZw" id="qQg-AI-q9F"/>
                         <outlet property="bpmLabel" destination="su5-TZ-OFq" id="tec-76-jpw"/>
-                        <outlet property="lineChartView" destination="j0Z-5B-Zin" id="HYa-jm-0bE"/>
                         <outlet property="participantNameTextField" destination="qSE-Qc-Z8D" id="Bzh-L6-PJ2"/>
                         <outlet property="questionLabel" destination="Mws-qX-4l5" id="dwh-Rc-UOX"/>
                         <outlet property="questionTextField" destination="mjL-LD-1Gd" id="fPx-67-K0U"/>

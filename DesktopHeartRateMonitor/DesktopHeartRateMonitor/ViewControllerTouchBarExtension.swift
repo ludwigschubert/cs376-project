@@ -24,13 +24,17 @@ extension ViewController: NSTouchBarDelegate {
         switch identifier {
         case NSTouchBarItemIdentifier.heartRateLabelItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-            let textField = NSTextField(labelWithString: "HI THERE")
+//            let textField = NSTextField(labelWithString: "HI THERE")
             //            textField.bind("stringValue", to: self, withKeyPath: #keyPath(touchBarString), options: nil)
             //            textField.backgroundColor = NSColor.red
             //            textField.textColor = NSColor.green
 //            let imageView = NSImageView()
 //            imageView.bind("image", to: self, withKeyPath: #keyPath(image), options: nil)
-            customViewItem.view = textField
+            customViewItem.view = lineChartView
+            return customViewItem
+        case NSTouchBarItemIdentifier.heartRateStatusLabelItem:
+            let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+            
             return customViewItem
         default:
             return nil

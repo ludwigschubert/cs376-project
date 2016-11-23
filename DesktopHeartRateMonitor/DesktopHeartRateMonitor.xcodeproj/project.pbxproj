@@ -103,6 +103,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		021E1E621DE513BE0056F1E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				021A47D41DC91F7700B980E7 /* Question.swift */,
+				02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */,
+				02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		021E1E631DE513CC0056F1E9 /* Sensing */ = {
+			isa = PBXGroup;
+			children = (
+				02734A991DD0412500430705 /* HeartRateSensor.swift */,
+				026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */,
+				026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */,
+			);
+			name = Sensing;
+			sourceTree = "<group>";
+		};
+		021E1E641DE513F00056F1E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				02F060EE1DC6E74000740F87 /* ViewController.swift */,
+				021E1E671DE514920056F1E9 /* TouchBar */,
+				021E1E681DE514970056F1E9 /* StatusBar */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		021E1E671DE514920056F1E9 /* TouchBar */ = {
+			isa = PBXGroup;
+			children = (
+				021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */,
+				021E1E601DE50B420056F1E9 /* TouchBarIdentifiers.swift */,
+			);
+			name = TouchBar;
+			sourceTree = "<group>";
+		};
+		021E1E681DE514970056F1E9 /* StatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */,
+			);
+			name = StatusBar;
+			sourceTree = "<group>";
+		};
 		02F060E01DC6E74000740F87 = {
 			isa = PBXGroup;
 			children = (
@@ -125,19 +172,12 @@
 			isa = PBXGroup;
 			children = (
 				02F060EC1DC6E74000740F87 /* AppDelegate.swift */,
-				02F060EE1DC6E74000740F87 /* ViewController.swift */,
-				021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */,
-				021E1E601DE50B420056F1E9 /* TouchBarIdentifiers.swift */,
+				021E1E631DE513CC0056F1E9 /* Sensing */,
+				021E1E621DE513BE0056F1E9 /* Model */,
+				021E1E641DE513F00056F1E9 /* View */,
 				02F060F01DC6E74000740F87 /* Assets.xcassets */,
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
-				02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */,
-				02F060FE1DC6F0CC00740F87 /* HeartRateSession.swift */,
-				021A47D41DC91F7700B980E7 /* Question.swift */,
-				02734A991DD0412500430705 /* HeartRateSensor.swift */,
-				026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */,
-				026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */,
-				026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */,
 			);
 			path = DesktopHeartRateMonitor;
 			sourceTree = "<group>";

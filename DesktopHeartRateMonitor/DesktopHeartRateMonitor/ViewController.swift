@@ -24,19 +24,18 @@ class ViewController: NSViewController {
 
     @IBOutlet var bpmLabel: NSTextField!
     @IBOutlet var participantNameTextField: NSTextField!
-    @IBOutlet var lineChartView: LineChartView!
+    let lineChartView = LineChartView.init(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
     @IBOutlet var questionLabel: NSTextField!
     @IBOutlet var questionTextField: NSTextField!
     @IBOutlet var answerLabel: NSTextField!
     @IBOutlet var answerTextView: NSTextView!
     @IBOutlet var timerLabel: NSTextField!
 
-    // TouchBArTests
+    // TouchBar Extensions
+//    let images = [NSImage(named: "AppIcon"), NSImage(named: "StatusBarIcon")]
+//    dynamic var image : NSImage?
+//    var count = 0
 
-    let images = [NSImage(named: "AppIcon"), NSImage(named: "StatusBarIcon")]
-    dynamic var image : NSImage?
-    var count = 0
-    
     //MARK:- NSViewController Methods
 
     override func viewDidLoad() {
@@ -46,9 +45,17 @@ class ViewController: NSViewController {
 
         // Set up Chart
         lineChartView.leftAxis.drawLabelsEnabled = false
-        lineChartView.chartDescription?.text = ""
-        lineChartView.gridBackgroundColor = NSUIColor.white
+        lineChartView.rightAxis.drawLabelsEnabled = false
+        lineChartView.chartDescription?.enabled = false
+        lineChartView.gridBackgroundColor = NSColor.controlColor
+        lineChartView.drawGridBackgroundEnabled = true
+        lineChartView.xAxis.enabled = false
+        lineChartView.leftAxis.enabled = false
+        lineChartView.rightAxis.enabled = false
         lineChartView.xAxis.drawLabelsEnabled = false
+        lineChartView.legend.enabled = false
+        lineChartView.maxVisibleCount = 10
+        lineChartView.minOffset = 0.0
 
         lineChartDataSet.colors = [NSUIColor.red]
         lineChartDataSet.drawCirclesEnabled = false
@@ -60,7 +67,7 @@ class ViewController: NSViewController {
         lineChartView.data = lineChartData
 
         // Set up Question
-        answerTextView.isAutomaticTextCompletionEnabled = false
+//        answerTextView.isAutomaticTextCompletionEnabled = false
         questionsIterator = Question.examples().makeIterator()
         secondTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
         RunLoop.current.add(secondTimer!, forMode: RunLoopMode.commonModes)
@@ -68,12 +75,12 @@ class ViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
         name: Notification.Name.receivedHeartRate, object: nil)
 
-        // TouchBarTests
-        self.image = self.images[0]
-        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { timer in
-            self.count += 1
-            self.image = self.images[self.count % 2]
-        }
+        // TouchBar Extensions
+//        self.image = self.images[0]
+//        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { timer in
+//            self.count += 1
+//            self.image = self.images[self.count % 2]
+//        }
 
     }
 
@@ -98,8 +105,14 @@ class ViewController: NSViewController {
         heartRateSession.record(bpmValue: bpm);
         let chartDataEntry = ChartDataEntry(x: Double(lineChartDataSet.entryCount), y: Double(bpm))
         let _ = lineChartDataSet.addEntry(chartDataEntry)
+        if lineChartDataSet.entryCount > 10 {
+            let _ = lineChartDataSet.removeFirst()
+        }
         lineChartData.notifyDataChanged()
         lineChartView.notifyDataSetChanged()
+
+        lineChartView.layer!.cornerRadius = 6;
+        lineChartView.layer!.masksToBounds = true;
     }
 
     @IBAction func submitButtonWasPressed(_ sender: NSButton)
@@ -147,7 +160,7 @@ class ViewController: NSViewController {
     func show(question: Question) {
         currentQuestion = question
         questionTextField.stringValue = question.text
-        answerTextView.string = ""
+        answerTextView?.string = ""
         currentStartTime = NSDate.init()
     }
 
