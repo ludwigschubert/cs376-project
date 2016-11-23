@@ -11,7 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let heartRateSensor = FakeHeartRateSensor()
+    let heartRateSensor = HeartRateSensor()
     let heartRateManager = HeartRateManager()
     var viewController : ViewController!
     var statusBar : HeartRateStatusBarController?

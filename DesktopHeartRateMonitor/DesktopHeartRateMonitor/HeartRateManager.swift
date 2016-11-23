@@ -50,7 +50,7 @@ class HeartRateManager : HeartRateSensorDelegate {
         case .Ongoing:
             let σ = heartRateQueue.standardDeviation()
             print("calibrationStatus: σ ", σ)
-            if  true {//heartRateQueue.full() && σ < 8.0 {
+            if true{//heartRateQueue.full() && σ < 8.0 {
                 baseHeartRate = heartRateQueue.average()
                 calibrationStatus = .Finished
 //                print("calibrationStatusChanged: Finished ", baseHeartRate!)
@@ -64,7 +64,8 @@ class HeartRateManager : HeartRateSensorDelegate {
                 heartRateStatus = newHeartRateStatus
 //                print("heartRateStatusChanged: ", heartRateStatus)
                 NotificationCenter.default.post(name: .heartRateStatusChanged,
-                                                object: heartRateStatus)
+                                                object: nil,
+                                                userInfo: ["heartRateStatus": heartRateStatus])
             }
             NotificationCenter.default.post(name: .receivedHeartRate,
                                             object: nil,

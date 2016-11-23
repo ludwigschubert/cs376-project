@@ -72,7 +72,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" sceneMemberID="viewController">
+                <windowController showSeguePresentationStyle="single" id="B8D-0N-5wS" customClass="WindowController" customModule="DesktopHeartRateMonitor" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="CS 376 Mindset Study" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -144,14 +144,6 @@ DQ
                                     <rect key="frame" x="42" y="2" width="457" height="62"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qSE-Qc-Z8D">
-                                            <rect key="frame" x="0.0" y="33" width="297" height="22"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Participant Name" usesSingleLineMode="YES" bezelStyle="round" id="sck-ix-HEb">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Bx-tc-9ZQ">
                                             <rect key="frame" x="299" y="26" width="164" height="32"/>
                                             <constraints>
@@ -167,10 +159,7 @@ DQ
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="1Bx-tc-9ZQ" firstAttribute="leading" secondItem="qSE-Qc-Z8D" secondAttribute="trailing" constant="8" id="19Y-rg-707"/>
-                                        <constraint firstItem="qSE-Qc-Z8D" firstAttribute="leading" secondItem="aV2-PO-zct" secondAttribute="leading" id="DM7-I0-Jlw"/>
                                         <constraint firstItem="1Bx-tc-9ZQ" firstAttribute="top" secondItem="aV2-PO-zct" secondAttribute="top" constant="8" id="DSL-hs-r7a"/>
-                                        <constraint firstItem="qSE-Qc-Z8D" firstAttribute="centerY" secondItem="1Bx-tc-9ZQ" secondAttribute="centerY" id="PGD-Xn-Hwc"/>
                                         <constraint firstAttribute="trailing" secondItem="1Bx-tc-9ZQ" secondAttribute="trailing" id="yRu-20-7nr"/>
                                     </constraints>
                                 </view>
@@ -198,20 +187,50 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5la-Pj-92l">
+                                <rect key="frame" x="20" y="199" width="455" height="339"/>
+                                <clipView key="contentView" id="4RA-4O-a45">
+                                    <rect key="frame" x="1" y="1" width="453" height="337"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="q6V-x4-GJz" customClass="TextView" customModule="DesktopHeartRateMonitor" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="453" height="337"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="453" height="337"/>
+                                            <size key="maxSize" width="463" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kYM-rb-hmG">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="YT1-qI-Uub">
+                                    <rect key="frame" x="438" y="1" width="16" height="337"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="hDu-dv-Cpa" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="0tD-ut-XBN"/>
                             <constraint firstItem="vvS-ew-cVs" firstAttribute="top" secondItem="mjL-LD-1Gd" secondAttribute="bottom" constant="8" id="1cF-4d-Pj6"/>
                             <constraint firstItem="su5-TZ-OFq" firstAttribute="top" secondItem="VlF-zQ-QGs" secondAttribute="bottom" constant="100" id="8Yu-W8-Ace"/>
                             <constraint firstItem="su5-TZ-OFq" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="A0C-JK-V3z"/>
+                            <constraint firstItem="5la-Pj-92l" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="AlN-7F-KhF"/>
                             <constraint firstItem="mjL-LD-1Gd" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="GFn-k1-5ov"/>
                             <constraint firstItem="Mws-qX-4l5" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="LPz-6r-AbX"/>
+                            <constraint firstItem="VlF-zQ-QGs" firstAttribute="top" secondItem="5la-Pj-92l" secondAttribute="bottom" constant="6" id="LRf-0t-73N"/>
+                            <constraint firstItem="5la-Pj-92l" firstAttribute="top" secondItem="vvS-ew-cVs" secondAttribute="bottom" constant="8" id="RMG-3A-2IX"/>
                             <constraint firstItem="su5-TZ-OFq" firstAttribute="top" secondItem="hDu-dv-Cpa" secondAttribute="bottom" constant="102" id="U3J-7u-Sm9"/>
                             <constraint firstItem="IPc-Tg-w9R" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="-20" id="Yfn-Qa-gJc"/>
                             <constraint firstItem="vvS-ew-cVs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="22" id="ZvD-Eu-GLk"/>
                             <constraint firstItem="mjL-LD-1Gd" firstAttribute="top" secondItem="Mws-qX-4l5" secondAttribute="bottom" constant="8" id="aoL-Ul-U3U"/>
                             <constraint firstItem="Mws-qX-4l5" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="dZN-PX-ote"/>
                             <constraint firstAttribute="trailing" secondItem="su5-TZ-OFq" secondAttribute="trailing" constant="20" id="edG-Xq-FiE"/>
+                            <constraint firstAttribute="trailing" secondItem="5la-Pj-92l" secondAttribute="trailing" constant="20" id="fzT-7m-sYc"/>
                             <constraint firstAttribute="trailing" secondItem="VlF-zQ-QGs" secondAttribute="trailing" constant="20" id="hyr-x0-wru"/>
                             <constraint firstAttribute="trailing" secondItem="mjL-LD-1Gd" secondAttribute="trailing" constant="20" id="iMv-bu-5A1"/>
                             <constraint firstAttribute="trailing" secondItem="Mws-qX-4l5" secondAttribute="trailing" constant="20" id="k4H-cg-bS4"/>
@@ -224,8 +243,8 @@ DQ
                     </view>
                     <connections>
                         <outlet property="answerLabel" destination="vvS-ew-cVs" id="Kng-OR-bES"/>
+                        <outlet property="answerTextView" destination="q6V-x4-GJz" id="ee3-N5-TWw"/>
                         <outlet property="bpmLabel" destination="su5-TZ-OFq" id="tec-76-jpw"/>
-                        <outlet property="participantNameTextField" destination="qSE-Qc-Z8D" id="Bzh-L6-PJ2"/>
                         <outlet property="questionLabel" destination="Mws-qX-4l5" id="dwh-Rc-UOX"/>
                         <outlet property="questionTextField" destination="mjL-LD-1Gd" id="fPx-67-K0U"/>
                         <outlet property="timerLabel" destination="hDu-dv-Cpa" id="4Ys-Jg-N7a"/>

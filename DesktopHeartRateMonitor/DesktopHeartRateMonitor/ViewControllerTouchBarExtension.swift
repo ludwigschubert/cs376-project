@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+//import QuartzCore
 
 extension ViewController: NSTouchBarDelegate {
 
@@ -15,7 +16,7 @@ extension ViewController: NSTouchBarDelegate {
         let touchBar = NSTouchBar()
         touchBar.delegate = self
         touchBar.customizationIdentifier = .heartRateBar
-        touchBar.defaultItemIdentifiers = [.heartRateLabelItem, .heartRateStatusLabelItem]
+        touchBar.defaultItemIdentifiers = [.heartRateLabelItem, .flexibleSpace, .heartRateStatusLabelItem, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge]
         touchBar.customizationAllowedItemIdentifiers = touchBar.defaultItemIdentifiers
         return touchBar
     }
@@ -24,20 +25,17 @@ extension ViewController: NSTouchBarDelegate {
         switch identifier {
         case NSTouchBarItemIdentifier.heartRateLabelItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-//            let textField = NSTextField(labelWithString: "HI THERE")
-            //            textField.bind("stringValue", to: self, withKeyPath: #keyPath(touchBarString), options: nil)
-            //            textField.backgroundColor = NSColor.red
-            //            textField.textColor = NSColor.green
-//            let imageView = NSImageView()
-//            imageView.bind("image", to: self, withKeyPath: #keyPath(image), options: nil)
             customViewItem.view = lineChartView
             return customViewItem
         case NSTouchBarItemIdentifier.heartRateStatusLabelItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-            
+            let textField = NSTextField(labelWithString: "HI THERE")
+            textField.bind("stringValue", to: self, withKeyPath: #keyPath(bpmLabel.stringValue), options: nil)
+            customViewItem.view = textField
+//            customViewItem.
             return customViewItem
         default:
-            return nil
+            return nil//NSTouchBarItem(identifier: identifier)
         }
     }
 }

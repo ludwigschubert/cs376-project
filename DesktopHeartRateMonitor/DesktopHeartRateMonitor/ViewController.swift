@@ -13,7 +13,8 @@ class ViewController: NSViewController {
 
     let lineChartData = LineChartData()
     let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
-
+    
+    var globalCounter : UInt64 = 0
     var seconds = 0
     var secondTimer: Timer?
     var currentQuestion: Question?
@@ -56,13 +57,15 @@ class ViewController: NSViewController {
         lineChartView.legend.enabled = false
         lineChartView.maxVisibleCount = 10
         lineChartView.minOffset = 0.0
+//        lineChartView.leftAxis.axisMinimum = 60.0
+//        lineChartView.leftAxis.axisMaximum = 130.0
 
-        lineChartDataSet.colors = [NSUIColor.red]
+        lineChartDataSet.colors = [NSUIColor.white]
         lineChartDataSet.drawCirclesEnabled = false
         lineChartDataSet.drawValuesEnabled = false
         lineChartDataSet.mode = Charts.LineChartDataSet.Mode.cubicBezier
         lineChartDataSet.drawFilledEnabled = true
-        lineChartDataSet.fillColor = NSUIColor.red
+        lineChartDataSet.fillColor = NSUIColor.white
         lineChartData.addDataSet(lineChartDataSet);
         lineChartView.data = lineChartData
 
@@ -74,6 +77,9 @@ class ViewController: NSViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
         name: Notification.Name.receivedHeartRate, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRateStatus),
+                                               name: Notification.Name.heartRateStatusChanged, object: nil)
 
         // TouchBar Extensions
 //        self.image = self.images[0]
@@ -99,20 +105,47 @@ class ViewController: NSViewController {
     //MARK:- IBActions
 
     func didReceiveHeartRate(notification: Notification) {
+        globalCounter += 1
         let userInfo = notification.userInfo!
         let bpm = userInfo["bpm"] as! Int
         bpmLabel.stringValue = "\(bpm) bpm"
         heartRateSession.record(bpmValue: bpm);
-        let chartDataEntry = ChartDataEntry(x: Double(lineChartDataSet.entryCount), y: Double(bpm))
-        let _ = lineChartDataSet.addEntry(chartDataEntry)
-        if lineChartDataSet.entryCount > 10 {
-            let _ = lineChartDataSet.removeFirst()
+        let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(bpm))
+        let addedSuccessfully = lineChartDataSet.addEntry(chartDataEntry)
+        if addedSuccessfully {
+            print(lineChartDataSet.entryCount)
+            if lineChartDataSet.entryCount > 11 {
+                let removedSuccesfully = lineChartDataSet.removeFirst()
+                if !removedSuccesfully {
+                    print("WTF")
+                }
+            }
         }
         lineChartData.notifyDataChanged()
         lineChartView.notifyDataSetChanged()
 
-        lineChartView.layer!.cornerRadius = 6;
-        lineChartView.layer!.masksToBounds = true;
+        lineChartView.layer?.cornerRadius = 6;
+        lineChartView.layer?.masksToBounds = true;
+    }
+    
+    func didReceiveHeartRateStatus(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
+        var color = NSColor.white
+        switch heartRateStatus {
+        case .Low:
+            color = NSColor.green
+            break
+        case .High:
+            color = NSColor.red
+            break
+        default: //.Normal
+            break
+        }
+        lineChartDataSet.colors = [color]
+        lineChartDataSet.fillColor = color
+//        lineChartData.notifyDataChanged()
+        lineChartView.notifyDataSetChanged()
     }
 
     @IBAction func submitButtonWasPressed(_ sender: NSButton)
