@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		021A47D51DC91F7700B980E7 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A47D41DC91F7700B980E7 /* Question.swift */; };
 		021E1E5F1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */; };
-		021E1E611DE50B420056F1E9 /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E601DE50B420056F1E9 /* TouchBarIdentifiers.swift */; };
+		021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */; };
 		026E7F261DE3ACA800EBA6B2 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */; };
 		026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */; };
 		026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */; };
@@ -73,7 +73,7 @@
 /* Begin PBXFileReference section */
 		021A47D41DC91F7700B980E7 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTouchBarExtension.swift; sourceTree = "<group>"; };
-		021E1E601DE50B420056F1E9 /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TouchBarIdentifiers.swift; path = ../../../HeartRateMonitor/HeartRateMonitor/TouchBarIdentifiers.swift; sourceTree = "<group>"; };
+		021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarIdentifiers.swift; sourceTree = "<group>"; };
 		026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
 		026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHeartRateSensor.swift; sourceTree = "<group>"; };
 		026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateStatusBarController.swift; sourceTree = "<group>"; };
@@ -136,8 +136,8 @@
 		021E1E671DE514920056F1E9 /* TouchBar */ = {
 			isa = PBXGroup;
 			children = (
+				021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */,
 				021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */,
-				021E1E601DE50B420056F1E9 /* TouchBarIdentifiers.swift */,
 			);
 			name = TouchBar;
 			sourceTree = "<group>";
@@ -314,7 +314,7 @@
 				021E1E5F1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift in Sources */,
 				026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */,
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
-				021E1E611DE50B420056F1E9 /* TouchBarIdentifiers.swift in Sources */,
+				021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */,
 				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
