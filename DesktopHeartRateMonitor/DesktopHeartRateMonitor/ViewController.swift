@@ -11,196 +11,267 @@ import Charts
 
 class ViewController: NSViewController {
 
-    let lineChartData = LineChartData()
-    let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
-    
-    var globalCounter : UInt64 = 0
-    var seconds = 0
-    var secondTimer: Timer?
-    var currentQuestion: Question?
-    var currentStartTime: NSDate?
-    var questionsIterator: IndexingIterator<Array<Question>>?
+  let lineChartData = LineChartData()
+  let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
 
-    var heartRateSession: HeartRateSession = HeartRateSession.init()
+  var globalCounter : UInt64 = 0
+  var seconds = 20
+  var countdownTimer: Timer?
+  var currentQuestion: Question
+  var currentStartTime: NSDate = NSDate.init()
+  var questionSetIterator: IndexingIterator<Array<Array<Question>>> = Question.examples().makeIterator()
+  var questionsIterator: IndexingIterator<Array<Question>>
 
-    @IBOutlet var bpmLabel: NSTextField!
-    @IBOutlet var participantNameTextField: NSTextField!
-    let lineChartView = LineChartView.init(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
-    @IBOutlet var questionLabel: NSTextField!
-    @IBOutlet var questionTextField: NSTextField!
-    @IBOutlet var answerLabel: NSTextField!
-    @IBOutlet var answerTextView: NSTextView!
-    @IBOutlet var timerLabel: NSTextField!
+  var heartRateSession: HeartRateSession = HeartRateSession.init()
 
-    // TouchBar Extensions
-//    let images = [NSImage(named: "AppIcon"), NSImage(named: "StatusBarIcon")]
-//    dynamic var image : NSImage?
-//    var count = 0
+  @IBOutlet var questionTextField: NSTextField!
+  @IBOutlet var answerTextField: NSTextField!
+  @IBOutlet var timerLabel: NSTextField!
 
-    //MARK:- NSViewController Methods
+  required init?(coder: NSCoder) {
+    let questionSet = questionSetIterator.next()!
+    questionsIterator = questionSet.makeIterator()
+    currentQuestion = questionsIterator.next()!
+    super.init(coder: coder)
+  }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+  // TouchBar Extensions
+  let lineChartView = LineChartView.init(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+  let imageView1 = NSImageView()
+  let imageView2 = NSImageView()
+  let imageView3 = NSImageView()
+  let imageView4 = NSImageView()
+  let imageView5 = NSImageView()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.applicationWillTerminateNotification), name: NSNotification.Name.NSApplicationWillTerminate, object: nil)
+  //MARK:- NSViewController Methods
 
-        // Set up Chart
-        lineChartView.leftAxis.drawLabelsEnabled = false
-        lineChartView.rightAxis.drawLabelsEnabled = false
-        lineChartView.chartDescription?.enabled = false
-        lineChartView.gridBackgroundColor = NSColor.controlColor
-        lineChartView.drawGridBackgroundEnabled = true
-        lineChartView.xAxis.enabled = false
-        lineChartView.leftAxis.enabled = false
-        lineChartView.rightAxis.enabled = false
-        lineChartView.xAxis.drawLabelsEnabled = false
-        lineChartView.legend.enabled = false
-        lineChartView.maxVisibleCount = 10
-        lineChartView.minOffset = 0.0
-//        lineChartView.leftAxis.axisMinimum = 60.0
-//        lineChartView.leftAxis.axisMaximum = 130.0
+  override func viewDidLoad() {
+    super.viewDidLoad()
 
-        lineChartDataSet.colors = [NSUIColor.white]
-        lineChartDataSet.drawCirclesEnabled = false
-        lineChartDataSet.drawValuesEnabled = false
-        lineChartDataSet.mode = Charts.LineChartDataSet.Mode.cubicBezier
-        lineChartDataSet.drawFilledEnabled = true
-        lineChartDataSet.fillColor = NSUIColor.white
-        lineChartData.addDataSet(lineChartDataSet);
-        lineChartView.data = lineChartData
+    NotificationCenter.default.addObserver(self, selector: #selector(ViewController.applicationWillTerminateNotification), name: NSNotification.Name.NSApplicationWillTerminate, object: nil)
 
-        // Set up Question
-//        answerTextView.isAutomaticTextCompletionEnabled = false
-        questionsIterator = Question.examples().makeIterator()
-        secondTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
-        RunLoop.current.add(secondTimer!, forMode: RunLoopMode.commonModes)
+    // Set up Chart
+    lineChartView.leftAxis.drawLabelsEnabled = false
+    lineChartView.rightAxis.drawLabelsEnabled = false
+    lineChartView.chartDescription?.enabled = false
+    lineChartView.gridBackgroundColor = NSColor.controlColor
+    lineChartView.drawGridBackgroundEnabled = true
+    lineChartView.xAxis.enabled = false
+    lineChartView.leftAxis.enabled = false
+    lineChartView.rightAxis.enabled = false
+    lineChartView.xAxis.drawLabelsEnabled = false
+    lineChartView.legend.enabled = false
+    lineChartView.maxVisibleCount = 10
+    lineChartView.minOffset = 0.0
+    //        lineChartView.leftAxis.axisMinimum = 60.0
+    //        lineChartView.leftAxis.axisMaximum = 130.0
 
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
-        name: Notification.Name.receivedHeartRate, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRateStatus),
-                                               name: Notification.Name.heartRateStatusChanged, object: nil)
+    lineChartDataSet.colors = [NSUIColor.white]
+    lineChartDataSet.drawCirclesEnabled = false
+    lineChartDataSet.drawValuesEnabled = false
+    lineChartDataSet.mode = Charts.LineChartDataSet.Mode.cubicBezier
+    lineChartDataSet.drawFilledEnabled = true
+    lineChartDataSet.fillColor = NSUIColor.white
+    lineChartData.addDataSet(lineChartDataSet);
+    lineChartView.data = lineChartData
 
-        // TouchBar Extensions
-//        self.image = self.images[0]
-//        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true) { timer in
-//            self.count += 1
-//            self.image = self.images[self.count % 2]
-//        }
+    // Set up Question
+    //        answerTextField.isAutomaticTextCompletionEnabled = false
+    countdownTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
+    RunLoop.current.add(countdownTimer!, forMode: RunLoopMode.commonModes)
 
+    NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
+                                           name: Notification.Name.receivedHeartRate, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRateStatus),
+                                           name: Notification.Name.heartRateStatusChanged, object: nil)
+
+//    print(UserDefaults.standard.value(forKey: "participantName"))
+    timerLabel.stringValue = "\(seconds) seconds left"
+
+  }
+
+  func applicationWillTerminateNotification() {
+    print("Received applicationWillTerminateNotification, saving…");
+    heartRateSession.end()
+    HeartRateSessionWriter.write(heartRateSession: heartRateSession)
+  }
+
+  override func viewWillAppear() {
+    if let question = questionsIterator.next() {
+      show(question: question)
     }
+  }
 
-    func applicationWillTerminateNotification() {
-        print("Received applicationWillTerminateNotification, saving…");
-        heartRateSession.end()
-        HeartRateSessionWriter.write(heartRateSession: heartRateSession)
-    }
+  //MARK:- IBActions
 
-    override func viewWillAppear() {
-        if let question = questionsIterator!.next() {
-            show(question: question)
+  func didReceiveHeartRate(notification: Notification) {
+    globalCounter += 1
+    let userInfo = notification.userInfo!
+    let bpm = userInfo["bpm"] as! Int
+    let average = userInfo["average"] as! Double
+    heartRateSession.record(bpmValue: bpm);
+    let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(bpm))
+    let addedSuccessfully = lineChartDataSet.addEntry(chartDataEntry)
+    if addedSuccessfully {
+      print(lineChartDataSet.entryCount)
+      if lineChartDataSet.entryCount > 11 {
+        let removedSuccesfully = lineChartDataSet.removeFirst()
+        if !removedSuccesfully {
+          print("WTF")
         }
+      }
+    }
+    lineChartData.notifyDataChanged()
+    lineChartView.notifyDataSetChanged()
+
+    lineChartView.layer?.cornerRadius = 6;
+    lineChartView.layer?.masksToBounds = true;
+
+    // Indicator Lights Stuff
+    let dBmp = Double(bpm)
+    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight")
+    let greenImage = image.tinted(color: NSColor.green)
+
+    imageView1.image = image
+    imageView2.image = image
+    imageView3.image = image
+    imageView4.image = image
+    imageView5.image = image
+
+    if dBmp > 0.8 * average {
+      imageView1.image = greenImage
     }
 
-    //MARK:- IBActions
-
-    func didReceiveHeartRate(notification: Notification) {
-        globalCounter += 1
-        let userInfo = notification.userInfo!
-        let bpm = userInfo["bpm"] as! Int
-        bpmLabel.stringValue = "\(bpm) bpm"
-        heartRateSession.record(bpmValue: bpm);
-        let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(bpm))
-        let addedSuccessfully = lineChartDataSet.addEntry(chartDataEntry)
-        if addedSuccessfully {
-            print(lineChartDataSet.entryCount)
-            if lineChartDataSet.entryCount > 11 {
-                let removedSuccesfully = lineChartDataSet.removeFirst()
-                if !removedSuccesfully {
-                    print("WTF")
-                }
-            }
-        }
-        lineChartData.notifyDataChanged()
-        lineChartView.notifyDataSetChanged()
-
-        lineChartView.layer?.cornerRadius = 6;
-        lineChartView.layer?.masksToBounds = true;
-    }
-    
-    func didReceiveHeartRateStatus(notification: Notification) {
-        let userInfo = notification.userInfo!
-        let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
-        var color = NSColor.white
-        switch heartRateStatus {
-        case .Low:
-            color = NSColor.green
-            break
-        case .High:
-            color = NSColor.red
-            break
-        default: //.Normal
-            break
-        }
-        lineChartDataSet.colors = [color]
-        lineChartDataSet.fillColor = color
-//        lineChartData.notifyDataChanged()
-        lineChartView.notifyDataSetChanged()
+    if dBmp > 0.9 * average {
+      imageView2.image = greenImage
     }
 
-    @IBAction func submitButtonWasPressed(_ sender: NSButton)
-    {
-        let originalColor = self.answerTextView.backgroundColor
+    if dBmp > 1.0 * average {
+      imageView3.image = greenImage
+    }
 
-        let answer = answerTextView.string?.trimmingCharacters(in: .whitespaces)
-        let gotAnswerCorrect = answer == currentQuestion?.answer
-        let timeInterval = currentStartTime!.timeIntervalSinceNow
-        if gotAnswerCorrect {
-            self.answerTextView.backgroundColor = NSColor.green
-        } else {
-            self.answerTextView.backgroundColor = NSColor.red
-        }
-        heartRateSession.record(gotAnswerCorrect: gotAnswerCorrect, afterTimeInterval: timeInterval)
+    if dBmp > 1.1 * average {
+      imageView4.image = greenImage
+    }
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(3),
-                                      execute: {
-                                        self.answerTextView.backgroundColor = originalColor
+    if dBmp > 1.2 * average {
+      imageView5.image = greenImage
+    }
 
-                                        if let question = self.questionsIterator!.next() {
-                                            if gotAnswerCorrect {
-                                                self.show(question: question)
-                                            }
-                                        } else {
-                                            // show end
+  }
+
+  func didReceiveHeartRateStatus(notification: Notification) {
+    let userInfo = notification.userInfo!
+    let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
+
+    // LineChart Stuff
+    var color = NSColor.white
+    switch heartRateStatus {
+    case .Low:
+      color = NSColor.green
+//      bpmLabel?.stringValue = "😴 You're not giving it your best…"
+      break
+    case .High:
+      color = NSColor.red
+//      bpmLabel?.stringValue = "😎 You're getting pumped!"
+      break
+    default: //.Normal
+//      bpmLabel?.stringValue = ""
+      break
+    }
+    lineChartDataSet.colors = [color]
+    lineChartDataSet.fillColor = color
+    lineChartView.notifyDataSetChanged()
+  }
+
+  @IBAction func submitAnswer(_ sender: Any) {
+    print("Submit pressed!")
+
+    let originalLayerColor = self.view.layer?.backgroundColor
+
+    let answer = answerTextField.stringValue.trimmingCharacters(in: .whitespaces)
+    let gotAnswerCorrect = answer == currentQuestion.answer
+    let timeInterval = currentStartTime.timeIntervalSinceNow
+
+    if gotAnswerCorrect {
+      self.view.layer?.backgroundColor = NSColor(red:0.56, green:0.93, blue:0.56, alpha:1.0).cgColor
+    } else {
+      self.view.layer?.backgroundColor = NSColor(red:0.93, green:0.56, blue:0.56, alpha:1.0).cgColor
+    }
+    heartRateSession.record(gotAnswerCorrect: gotAnswerCorrect, afterTimeInterval: timeInterval)
+
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1),
+                                  execute: {
+                                    self.view.layer?.backgroundColor = originalLayerColor;
+                                    if !self.answerTextField.isHidden {
+                                      if let question = self.questionsIterator.next() {
+                                        if gotAnswerCorrect {
+                                          self.show(question: question)
                                         }
-        })
+                                      } else {
+                                        print("You should not get to the end")
+                                      }
+                                    }
+    })
 
+  }
+
+  @IBAction func saveButtonWasPressed(_ sender: NSButtonCell)
+  {
+//    heartRateSession.participantName = participantNameTextField.stringValue
+    heartRateSession.end()
+    HeartRateSessionWriter.write(heartRateSession: heartRateSession)
+    self.heartRateSession = HeartRateSession.init()
+    lineChartDataSet.values = [];
+    lineChartData.notifyDataChanged()
+    lineChartView.notifyDataSetChanged()
+  }
+
+  //MARK:- Internal
+
+  func show(question: Question) {
+    currentQuestion = question
+    questionTextField.stringValue = question.text
+    answerTextField?.stringValue = ""
+    currentStartTime = NSDate.init()
+  }
+
+  func timerWasFired() {
+    seconds -= 1
+    if seconds < 0 {
+      if answerTextField.isHidden { // we're in a pause, need to start
+        seconds = 60
+        startSession()
+      } else { // we're in a session, need to pause
+        seconds = 30
+        endSession()
+      }
     }
+    timerLabel.stringValue = "\(seconds) seconds left"
+  }
 
-    @IBAction func saveButtonWasPressed(_ sender: NSButtonCell)
-    {
-        heartRateSession.participantName = participantNameTextField.stringValue
-        heartRateSession.end()
-        HeartRateSessionWriter.write(heartRateSession: heartRateSession)
-        self.heartRateSession = HeartRateSession.init()
-        lineChartDataSet.values = [];
-        lineChartData.notifyDataChanged()
-        lineChartView.notifyDataSetChanged()
+  func endSession() {
+    questionTextField.isHidden = true;
+    answerTextField.isHidden = true;
+
+    if let questionSet = questionSetIterator.next() {
+      questionsIterator = questionSet.makeIterator()
+    } else {
+      timerLabel.isHidden = true;
+      print("End of last session")
+      self.view.window?.close()
     }
+  }
 
-    //MARK:- Internal
+  func startSession() {
+    questionTextField.isHidden = false;
+    answerTextField.isHidden = false;
 
-    func show(question: Question) {
-        currentQuestion = question
-        questionTextField.stringValue = question.text
-        answerTextView?.string = ""
-        currentStartTime = NSDate.init()
+    if let question = questionsIterator.next() {
+      show(question: question)
     }
-
-    func timerWasFired() {
-        seconds += 1
-        timerLabel.stringValue = "\(seconds)s"
-    }
+  }
 
 
 }

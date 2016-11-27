@@ -10,8 +10,13 @@ import AppKit
 
 extension NSTouchBarItemIdentifier {
   static let heartRateLabelItem = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.heartRateLabel")
-  static let heartRateVisualizationLabelItem = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.heartRateVisualizationLabelItem")
+  static let heartRateLineChartItem = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.heartRateLineChartLabel")
   static let heartRateStatusLabelItem = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.heartRateStatusLabel")
+  static let heartRateIndicatorItem1 = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.hri1")
+  static let heartRateIndicatorItem2 = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.hri2")
+  static let heartRateIndicatorItem3 = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.hri3")
+  static let heartRateIndicatorItem4 = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.hri4")
+  static let heartRateIndicatorItem5 = NSTouchBarItemIdentifier("edu.stanford.cs.cs376.hrm.hri5")
 }
 
 extension NSTouchBarCustomizationIdentifier {

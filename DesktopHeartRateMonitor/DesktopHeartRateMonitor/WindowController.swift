@@ -9,18 +9,18 @@
 import Cocoa
 
 class WindowController: NSWindowController {
-    
-//    override func windowDidLoad() {
-//        super.windowDidLoad()
-//    }
-    
-    override func makeTouchBar() -> NSTouchBar? {
-        guard let viewController = contentViewController as? ViewController else {
-            return nil
-        }
-        return viewController.makeTouchBar()
+
+  override func windowDidLoad() {
+    window?.toggleFullScreen(self)
+  }
+
+  override func makeTouchBar() -> NSTouchBar? {
+    guard let viewController = contentViewController as? ViewController else {
+      return nil
     }
-    
+    return viewController.makeTouchBar()
+  }
+
 }
 
 

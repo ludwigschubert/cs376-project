@@ -10,19 +10,36 @@ import Foundation
 
 class Question: NSObject {
 
-    let text: String
-    let answer: String
+  let text: String
+  let answer: String
 
-    init(text: String, answer: String) {
-        self.text = text
-        self.answer = answer
-    }
+  init(text: String, answer: String) {
+    self.text = text
+    self.answer = answer
+  }
 
-    static func examples() -> Array<Question> {
-        return [
-            Question.init(text: "/* Program B */\n int x = readInt(); \n if (x >= 10000) {\n   while (x != 0) {\n      if (x % 10 != 9) {\n         println('failure');\n      }\n    x /= 10; }\n   println('success');\n}\n\nWhat is the smallest integer value for which this program prints 'success'?", answer: "99999"),
-            Question.init(text: "private String mystery(String s) {\n String result = '';\n int len = s.length();\n int j = 0;\n int k = 9;\n while (j < k) {\nif (j < 4) {\n   result += s.charAt(k % len);\n}\nif (j / 2 != 1) {\n   result += s.charAt(j % len);\n}\nj++;\nk--; }\n return result;\n  }\n\nWhat is the value of mystery('abcdefg')?", answer: "cabbage"),
-            Question.init(text: "test", answer: "test")
-        ]
-    }
+  static func examples() -> Array<Array<Question>> {
+    return [
+      [
+        Question.init(text: "Set 1, Question 1: 42=", answer: "42"),
+        Question.init(text: "Set 1, Question 2: 42=", answer: "42"),
+        Question.init(text: "Set 1, Question 3: 42=", answer: "42")
+      ],
+      [
+        Question.init(text: "Set 2, Question 1: 42=", answer: "42"),
+        Question.init(text: "Set 2, Question 2: 42=", answer: "42"),
+        Question.init(text: "Set 2, Question 3: 42=", answer: "42")
+      ],
+      [
+        Question.init(text: "Set 3, Question 1: 42=", answer: "42"),
+        Question.init(text: "Set 3, Question 2: 42=", answer: "42"),
+        Question.init(text: "Set 3, Question 3: 42=", answer: "42")
+      ],
+      [
+        Question.init(text: "Set 4, Question 1: 42=", answer: "42"),
+        Question.init(text: "Set 4, Question 2: 42=", answer: "42"),
+        Question.init(text: "Set 4, Question 3: 42=", answer: "42")
+      ]
+    ]
+  }
 }

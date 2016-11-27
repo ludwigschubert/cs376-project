@@ -16,24 +16,54 @@ extension ViewController: NSTouchBarDelegate {
         let touchBar = NSTouchBar()
         touchBar.delegate = self
         touchBar.customizationIdentifier = .heartRateBar
-        touchBar.defaultItemIdentifiers = [.heartRateLabelItem, .flexibleSpace, .heartRateStatusLabelItem, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge, .fixedSpaceLarge]
+        touchBar.defaultItemIdentifiers = [.heartRateIndicatorItem1, .heartRateIndicatorItem2, .heartRateIndicatorItem3, .heartRateIndicatorItem4, .heartRateIndicatorItem5, .heartRateStatusLabelItem]
         touchBar.customizationAllowedItemIdentifiers = touchBar.defaultItemIdentifiers
         return touchBar
     }
 
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
-        case NSTouchBarItemIdentifier.heartRateLabelItem:
+        case NSTouchBarItemIdentifier.heartRateLineChartItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
             customViewItem.view = lineChartView
             return customViewItem
         case NSTouchBarItemIdentifier.heartRateStatusLabelItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
             let textField = NSTextField(labelWithString: "HI THERE")
-            textField.bind("stringValue", to: self, withKeyPath: #keyPath(bpmLabel.stringValue), options: nil)
+//            textField.bind("stringValue", to: self, withKeyPath: #keyPath(bpmLabel.stringValue), options: nil)
             customViewItem.view = textField
 //            customViewItem.
             return customViewItem
+        case NSTouchBarItemIdentifier.heartRateIndicatorItem1:
+          let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+          let image = NSImage(named: "HeartRateIndicatorLight")
+          self.imageView1.image = image
+          customViewItem.view = imageView1
+          return customViewItem
+        case NSTouchBarItemIdentifier.heartRateIndicatorItem2:
+          let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+          let image = NSImage(named: "HeartRateIndicatorLight")
+          self.imageView2.image = image
+          customViewItem.view = imageView2
+          return customViewItem
+        case NSTouchBarItemIdentifier.heartRateIndicatorItem3:
+          let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+          let image = NSImage(named: "HeartRateIndicatorLight")
+          self.imageView3.image = image
+          customViewItem.view = imageView3
+          return customViewItem
+        case NSTouchBarItemIdentifier.heartRateIndicatorItem4:
+          let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+          let image = NSImage(named: "HeartRateIndicatorLight")
+          self.imageView4.image = image
+          customViewItem.view = imageView4
+          return customViewItem
+        case NSTouchBarItemIdentifier.heartRateIndicatorItem5:
+          let customViewItem = NSCustomTouchBarItem(identifier: identifier)
+          let image = NSImage(named: "HeartRateIndicatorLight")
+          self.imageView5.image = image
+          customViewItem.view = imageView5
+          return customViewItem
         default:
             return nil//NSTouchBarItem(identifier: identifier)
         }

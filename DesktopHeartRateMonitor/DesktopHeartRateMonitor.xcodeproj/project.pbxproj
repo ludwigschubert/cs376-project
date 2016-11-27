@@ -10,6 +10,8 @@
 		021A47D51DC91F7700B980E7 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A47D41DC91F7700B980E7 /* Question.swift */; };
 		021E1E5F1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */; };
 		021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */; };
+		023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023A54BC1DEA87D900A2A726 /* SetupViewController.swift */; };
+		025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */; };
 		026E7F261DE3ACA800EBA6B2 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */; };
 		026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */; };
 		026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */; };
@@ -76,6 +78,8 @@
 		021A47D41DC91F7700B980E7 /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		021E1E5E1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTouchBarExtension.swift; sourceTree = "<group>"; };
 		021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarIdentifiers.swift; sourceTree = "<group>"; };
+		023A54BC1DEA87D900A2A726 /* SetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
+		025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+TintColor.swift"; sourceTree = "<group>"; };
 		026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
 		026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHeartRateSensor.swift; sourceTree = "<group>"; };
 		026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateStatusBarController.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				839B47EC1DE5238400333AC3 /* WindowController.swift */,
 				021E1E671DE514920056F1E9 /* TouchBar */,
 				021E1E681DE514970056F1E9 /* StatusBar */,
+				023A54BC1DEA87D900A2A726 /* SetupViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				02F060F01DC6E74000740F87 /* Assets.xcassets */,
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
+				025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */,
 			);
 			path = DesktopHeartRateMonitor;
 			sourceTree = "<group>";
@@ -240,7 +246,7 @@
 				TargetAttributes = {
 					02F060E81DC6E74000740F87 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = EVX98G2B7C;
+						DevelopmentTeam = CD6WSVH5P2;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -314,6 +320,8 @@
 				02734A9A1DD0412500430705 /* HeartRateSensor.swift in Sources */,
 				839B47ED1DE5238400333AC3 /* WindowController.swift in Sources */,
 				026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */,
+				025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */,
+				023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */,
 				839B47EF1DE55CBD00333AC3 /* TextView.swift in Sources */,
 				021A47D51DC91F7700B980E7 /* Question.swift in Sources */,
 				02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */,
@@ -448,7 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;
@@ -465,7 +473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;

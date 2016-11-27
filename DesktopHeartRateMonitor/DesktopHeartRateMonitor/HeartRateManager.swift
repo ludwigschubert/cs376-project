@@ -69,7 +69,7 @@ class HeartRateManager : HeartRateSensorDelegate {
             }
             NotificationCenter.default.post(name: .receivedHeartRate,
                                             object: nil,
-                                            userInfo: ["bpm": bpm])
+                                            userInfo: ["bpm": bpm, "average": baseHeartRate!])
             break
         }
     }
