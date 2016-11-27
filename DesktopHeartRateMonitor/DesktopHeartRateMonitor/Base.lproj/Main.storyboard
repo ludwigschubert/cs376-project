@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
-        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Window Controller-->
@@ -197,7 +196,7 @@
             <objects>
                 <viewController showSeguePresentationStyle="single" id="XfG-lQ-9wD" customClass="ViewController" customModule="DesktopHeartRateMonitor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="495" height="506"/>
+                        <rect key="frame" x="0.0" y="0.0" width="786" height="506"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A0Y-po-Znn">
@@ -238,18 +237,10 @@ Let's make it multiline</string>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDu-dv-Cpa">
-                                <rect key="frame" x="18" y="467" width="46" height="19"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="wBa-Xz-VvO">
-                                    <font key="font" metaFont="systemSemibold" size="16"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VlF-zQ-QGs">
-                                <rect key="frame" x="192" y="13" width="112" height="32"/>
+                                <rect key="frame" x="348" y="465" width="112" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="dXc-cl-xXW"/>
+                                    <constraint firstAttribute="width" constant="100" id="mbS-CO-bz2"/>
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="Submit (↩︎)" alternateTitle="Submit your answer to current question and go to next quetsion" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vzK-zc-2bJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -259,14 +250,22 @@ DQ
 </string>
                                 </buttonCell>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDu-dv-Cpa">
+                                <rect key="frame" x="359" y="12" width="68" height="31"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="wBa-Xz-VvO">
+                                    <font key="font" metaFont="system" size="26"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="hDu-dv-Cpa" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="2hb-7P-zw4"/>
-                            <constraint firstItem="hDu-dv-Cpa" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="DWr-bz-R5z"/>
+                            <constraint firstItem="VlF-zQ-QGs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="354" id="Gf6-17-wRb"/>
                             <constraint firstItem="A0Y-po-Znn" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="Ggh-uU-onZ"/>
-                            <constraint firstAttribute="bottom" secondItem="VlF-zQ-QGs" secondAttribute="bottom" constant="20" id="Y7H-ac-MeV"/>
+                            <constraint firstItem="VlF-zQ-QGs" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="13" id="VZ0-xt-B82"/>
                             <constraint firstItem="A0Y-po-Znn" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ZTk-k8-aM3"/>
-                            <constraint firstItem="VlF-zQ-QGs" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="a7V-71-ZfK"/>
+                            <constraint firstItem="hDu-dv-Cpa" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="hj7-00-eh8"/>
+                            <constraint firstAttribute="bottom" secondItem="hDu-dv-Cpa" secondAttribute="bottom" constant="12" id="pJQ-RI-m2x"/>
                         </constraints>
                     </view>
                     <connections>
@@ -277,7 +276,7 @@ DQ
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82.5" y="773"/>
+            <point key="canvasLocation" x="228" y="773"/>
         </scene>
     </scenes>
 </document>
