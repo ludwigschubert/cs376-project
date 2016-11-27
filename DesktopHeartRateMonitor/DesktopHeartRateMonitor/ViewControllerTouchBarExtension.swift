@@ -30,9 +30,8 @@ extension ViewController: NSTouchBarDelegate {
         case NSTouchBarItemIdentifier.heartRateStatusLabelItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
             let textField = NSTextField(labelWithString: "HI THERE")
-//            textField.bind("stringValue", to: self, withKeyPath: #keyPath(bpmLabel.stringValue), options: nil)
+            textField.bind("stringValue", to: self, withKeyPath: #keyPath(touchBarLabelString), options: nil)
             customViewItem.view = textField
-//            customViewItem.
             return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem1:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)

@@ -14,14 +14,16 @@ class HeartRateSessionWriter: NSObject {
     {
         let valuesString = serialize(heartRateSession: heartRateSession)
         let dateString = heartRateSession.startedOn.description
-        let participantName = heartRateSession.participantName
+        let participantName = UserDefaults.standard.value(forKey: "participantName")
         let fileName = "\(participantName)_\(dateString).txt"
 
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            let path = dir.appendingPathComponent("Heart Rate Sessions").appendingPathComponent(fileName)
-
+        if let dir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first {
+            
+            let path = dir.appendingPathComponent("Heart Rate Sessions")
+            let filePath = path.appendingPathComponent(fileName)
+            
             do {
-                try valuesString.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+                try valuesString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
             }
             catch {
                 print("Could not write to \(path)!")

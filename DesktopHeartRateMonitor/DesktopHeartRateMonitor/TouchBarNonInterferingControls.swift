@@ -8,10 +8,11 @@
 
 import Cocoa
 
-class TextView: NSTextView {
+
+extension NSTextView {
     
-    override func makeTouchBar() -> NSTouchBar? {
+    @available(OSX 10.12.1, *)
+    override open func makeTouchBar() -> NSTouchBar? {
         return nil
     }
-    
 }

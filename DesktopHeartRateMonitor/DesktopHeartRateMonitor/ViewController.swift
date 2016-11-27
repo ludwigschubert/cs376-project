@@ -15,7 +15,8 @@ class ViewController: NSViewController {
   let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
 
   var globalCounter : UInt64 = 0
-  var seconds = 20
+  var setCounter : UInt64 = 0
+  var seconds = 60
   var countdownTimer: Timer?
   var currentQuestion: Question
   var currentStartTime: NSDate = NSDate.init()
@@ -42,6 +43,7 @@ class ViewController: NSViewController {
   let imageView3 = NSImageView()
   let imageView4 = NSImageView()
   let imageView5 = NSImageView()
+  dynamic var touchBarLabelString = ""
 
   //MARK:- NSViewController Methods
 
@@ -109,12 +111,12 @@ class ViewController: NSViewController {
     globalCounter += 1
     let userInfo = notification.userInfo!
     let bpm = userInfo["bpm"] as! Int
+//    touchBarLabelString = "\(bpm) bpm"
     let average = userInfo["average"] as! Double
     heartRateSession.record(bpmValue: bpm);
     let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(bpm))
     let addedSuccessfully = lineChartDataSet.addEntry(chartDataEntry)
     if addedSuccessfully {
-      print(lineChartDataSet.entryCount)
       if lineChartDataSet.entryCount > 11 {
         let removedSuccesfully = lineChartDataSet.removeFirst()
         if !removedSuccesfully {
@@ -130,9 +132,14 @@ class ViewController: NSViewController {
 
     // Indicator Lights Stuff
     let dBmp = Double(bpm)
-    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight")
-    let greenImage = image.tinted(color: NSColor.green)
-
+    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight").tinted(color: NSColor.darkGray)
+    var greenImage : NSImage
+    if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 && setCounter >= 2 {
+        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight").tinted(color: NSColor.green)
+    } else {
+        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight")
+    }
+    
     imageView1.image = image
     imageView2.image = image
     imageView3.image = image
@@ -170,14 +177,14 @@ class ViewController: NSViewController {
     switch heartRateStatus {
     case .Low:
       color = NSColor.green
-//      bpmLabel?.stringValue = "😴 You're not giving it your best…"
+      touchBarLabelString = "😴 You're not giving it your best…"
       break
     case .High:
       color = NSColor.red
-//      bpmLabel?.stringValue = "😎 You're getting pumped!"
+      touchBarLabelString = "😎 You're getting pumped!"
       break
     default: //.Normal
-//      bpmLabel?.stringValue = ""
+      touchBarLabelString = ""
       break
     }
     lineChartDataSet.colors = [color]
@@ -252,21 +259,22 @@ class ViewController: NSViewController {
   }
 
   func endSession() {
-    questionTextField.isHidden = true;
-    answerTextField.isHidden = true;
+    questionTextField.isHidden = true
+    answerTextField.isHidden = true
 
     if let questionSet = questionSetIterator.next() {
+      setCounter += 1
       questionsIterator = questionSet.makeIterator()
     } else {
-      timerLabel.isHidden = true;
+      timerLabel.isHidden = true
       print("End of last session")
       self.view.window?.close()
     }
   }
 
   func startSession() {
-    questionTextField.isHidden = false;
-    answerTextField.isHidden = false;
+    questionTextField.isHidden = false
+    answerTextField.isHidden = false
 
     if let question = questionsIterator.next() {
       show(question: question)

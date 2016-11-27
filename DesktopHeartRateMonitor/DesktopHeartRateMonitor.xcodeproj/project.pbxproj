@@ -26,7 +26,7 @@
 		02F0611C1DC7043C00740F87 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F061171DC7041E00740F87 /* Charts.framework */; };
 		02F0611D1DC7043C00740F87 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02F061171DC7041E00740F87 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		839B47ED1DE5238400333AC3 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839B47EC1DE5238400333AC3 /* WindowController.swift */; };
-		839B47EF1DE55CBD00333AC3 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839B47EE1DE55CBD00333AC3 /* TextView.swift */; };
+		839B47EF1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839B47EE1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,7 @@
 		02F061001DC6F0D900740F87 /* HeartRateSessionWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateSessionWriter.swift; sourceTree = "<group>"; };
 		02F061101DC7041E00740F87 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		839B47EC1DE5238400333AC3 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
-		839B47EE1DE55CBD00333AC3 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		839B47EE1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarNonInterferingControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +134,7 @@
 		021E1E641DE513F00056F1E9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				839B47EE1DE55CBD00333AC3 /* TextView.swift */,
+				839B47EE1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift */,
 				02F060EE1DC6E74000740F87 /* ViewController.swift */,
 				839B47EC1DE5238400333AC3 /* WindowController.swift */,
 				021E1E671DE514920056F1E9 /* TouchBar */,
@@ -246,7 +246,7 @@
 				TargetAttributes = {
 					02F060E81DC6E74000740F87 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = CD6WSVH5P2;
+						DevelopmentTeam = EVX98G2B7C;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -322,7 +322,7 @@
 				026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */,
 				025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */,
 				023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */,
-				839B47EF1DE55CBD00333AC3 /* TextView.swift in Sources */,
+				839B47EF1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift in Sources */,
 				021A47D51DC91F7700B980E7 /* Question.swift in Sources */,
 				02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */,
 				02F060FF1DC6F0CC00740F87 /* HeartRateSession.swift in Sources */,
@@ -456,7 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				DEVELOPMENT_TEAM = EVX98G2B7C;
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;
@@ -473,7 +473,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				DEVELOPMENT_TEAM = EVX98G2B7C;
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;
