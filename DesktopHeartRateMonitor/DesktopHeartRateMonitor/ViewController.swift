@@ -186,8 +186,8 @@ class ViewController: NSViewController {
     switch heartRateStatus {
     case .Low:
       color = NSColor.green
-      //change text and have this disappear during first 2 rounds
-      // if grey round just give heart rate
+      //TODO: change text and have this disappear during first 2 rounds
+      //TODO: if grey round just give heart rate
       touchBarLabelString = "😴 You're not giving it your best…"
       break
     case .High:
