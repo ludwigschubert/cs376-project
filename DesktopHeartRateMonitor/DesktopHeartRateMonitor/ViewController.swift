@@ -16,7 +16,7 @@ class ViewController: NSViewController {
 
   var globalCounter : UInt64 = 0
   var setCounter : UInt64 = 0
-  var seconds = 60
+
   var countdownTimer: Timer?
   var currentQuestion: Question
   var currentStartTime: NSDate = NSDate.init()
@@ -26,11 +26,28 @@ class ViewController: NSViewController {
   var heartRateSession: HeartRateSession = HeartRateSession.init()
 
   let baseLineRounds : UInt64 = 3
+  let isTreatmentCondition = UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1
 
 
   @IBOutlet var questionTextField: NSTextField!
   @IBOutlet var answerTextField: NSTextField!
   @IBOutlet var timerLabel: NSTextField!
+  @IBOutlet weak var infoLabel: NSTextField!
+
+  var isPaused : Bool = true {
+    didSet {
+      if isPaused {
+        pauseUI()
+      } else {
+        unpauseUI()
+      }
+    }
+  }
+  var seconds = 60 {
+    didSet {
+      timerLabel.stringValue = "\(seconds) seconds left"
+    }
+  }
 
     @IBOutlet weak var equalSign: NSTextField!
   required init?(coder: NSCoder) {
@@ -94,6 +111,7 @@ class ViewController: NSViewController {
 
 //    print(UserDefaults.standard.value(forKey: "participantName"))
     timerLabel.stringValue = "\(seconds) seconds left"
+    infoLabel.stringValue = "Press return to start."
 
   }
 
@@ -104,8 +122,20 @@ class ViewController: NSViewController {
   }
 
   override func viewWillAppear() {
-    if let question = questionsIterator.next() {
-      show(question: question)
+    pauseUI()
+  }
+
+  //MARK: Respond to key events
+
+  override func becomeFirstResponder() -> Bool {
+    return true
+  }
+
+  override func keyDown(with event: NSEvent) {
+    if event.keyCode == 36 {
+      returnWasPressed()
+    } else {
+      nextResponder?.keyDown(with: event)
     }
   }
 
@@ -138,14 +168,12 @@ class ViewController: NSViewController {
     let dBmp = Double(bpm)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
     var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
-    if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
+    if isTreatmentCondition {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
     } else {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
-        
 //        (calibratedRed: 242.0, green: 153.0, blue: 199.0, alpha:1.0))
     }
-    
     
     imageView1.image = image
     imageView2.image = image
@@ -160,8 +188,6 @@ class ViewController: NSViewController {
     imageView4.isHidden = setCounter < baseLineRounds-1
     imageView5.isHidden = setCounter < baseLineRounds-1
 
-
-    
     if dBmp > 0.8 * average {
       imageView1.image = greenImage
     }
@@ -184,35 +210,35 @@ class ViewController: NSViewController {
     
     if setCounter >= baseLineRounds {
         if dBmp > 1.2 * average {
-            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
-                touchBarLabelString = "Heart rate: SUPER HIGH"
-            } else {
+            if isTreatmentCondition {
                 touchBarLabelString = "Alertness: SUPER HIGH"
+            } else {
+                touchBarLabelString = "Heart rate: SUPER HIGH"
             }
         } else if dBmp > 1.1 * average {
-            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
-                touchBarLabelString = "Heart rate: HIGH"
-            } else {
+            if isTreatmentCondition {
                 touchBarLabelString = "Alertness: HIGH"
+            } else {
+                touchBarLabelString = "Heart rate: HIGH"
             }
         } else if dBmp > 1.0 * average {
-            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
-                touchBarLabelString = "Heart rate: NORMAL"
-            } else {
+            if isTreatmentCondition {
                 touchBarLabelString = "Alertness: NORMAL"
+            } else {
+                touchBarLabelString = "Heart rate: NORMAL"
             }
         } else if dBmp > 0.9 * average {
             
-            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
-                touchBarLabelString = "Heart rate: LOW"
-            } else {
+            if isTreatmentCondition {
                 touchBarLabelString = "Alertness: LOW"
+            } else {
+                touchBarLabelString = "Heart rate: LOW"
             }
         } else if dBmp > 0.8 * average {
-            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
-                touchBarLabelString = "Heart rate: SUPER LOW"
-            } else {
+            if isTreatmentCondition {
                 touchBarLabelString = "Alertness: SUPER LOW"
+            } else {
+                touchBarLabelString = "Heart rate: SUPER LOW"
             }
         }
     }
@@ -224,18 +250,18 @@ class ViewController: NSViewController {
   }
 
   func didReceiveHeartRateStatus(notification: Notification) {
-    let userInfo = notification.userInfo!
-    let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
+//    let userInfo = notification.userInfo!
+//    let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
 
     // LineChart Stuff
-    var color = NSColor.white
+//    var color = NSColor.white
 //    if setCounter >= baseLineRounds {
 //        switch heartRateStatus {
 //        case .Low:
 //            color = NSColor.green
 //            //TODO: change text and have this disappear during first 2 rounds
 //            //TODO: if grey round just give heart rate
-//            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
+//            if isTreatmentCondition {
 //                touchBarLabelString = "Heart low"
 //            } else {
 //                touchBarLabelString = "😴 You're not giving it your best…"
@@ -243,7 +269,7 @@ class ViewController: NSViewController {
 //            break
 //        case .High:
 //            color = NSColor.red
-//            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
+//            if isTreatmentCondition {
 //                touchBarLabelString = "Heart rate high"
 //            } else {
 //                touchBarLabelString = "😎 You're getting pumped!"
@@ -255,9 +281,9 @@ class ViewController: NSViewController {
 //        }
 //    }
     
-    lineChartDataSet.colors = [color]
-    lineChartDataSet.fillColor = color
-    lineChartView.notifyDataSetChanged()
+//    lineChartDataSet.colors = [color]
+//    lineChartDataSet.fillColor = color
+//    lineChartView.notifyDataSetChanged()
   }
 
   @IBAction func submitAnswer(_ sender: Any) {
@@ -313,29 +339,16 @@ class ViewController: NSViewController {
   }
 
   func timerWasFired() {
+    guard !isPaused else {
+      return
+    }
     seconds -= 1
     if seconds < 0 {
-      if answerTextField.isHidden { // we're in a pause, need to start
-        seconds = 60
-        startSession()
-      } else { // we're in a session, need to pause
-        if setCounter == baseLineRounds-1 {
-            seconds = 90
-        } else {
-            seconds = 30
-
-        }
-        endSession()
-      }
+      isPaused = true
     }
-    timerLabel.stringValue = "\(seconds) seconds left"
   }
 
   func endSession() {
-    questionTextField.isHidden = true
-    answerTextField.isHidden = true
-    equalSign.isHidden = true
-
     if let questionSet = questionSetIterator.next() {
       setCounter += 1
       questionsIterator = questionSet.makeIterator()
@@ -347,12 +360,41 @@ class ViewController: NSViewController {
   }
 
   func startSession() {
+    if let question = questionsIterator.next() {
+      show(question: question)
+    }
+  }
+
+  func pauseUI() {
+    questionTextField.isHidden = true
+    answerTextField.isHidden = true
+    equalSign.isHidden = true
+    timerLabel.isHidden = true
+    infoLabel.isHidden = false
+    answerTextField.resignFirstResponder()
+    view.window?.makeFirstResponder(self)
+
+    endSession()
+  }
+
+  func unpauseUI() {
+    seconds = 60
     questionTextField.isHidden = false
     answerTextField.isHidden = false
     equalSign.isHidden = false
+    timerLabel.isHidden = false
+    infoLabel.isHidden = true
+    view.window?.makeFirstResponder(answerTextField)
 
-    if let question = questionsIterator.next() {
-      show(question: question)
+    startSession()
+  }
+
+  func returnWasPressed() {
+    print("returnWasPressed")
+    if isPaused {
+      isPaused = false
+    } else {
+      submitAnswer(self)
     }
   }
 

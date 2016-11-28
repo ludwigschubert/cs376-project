@@ -200,7 +200,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A0Y-po-Znn">
-                                <rect key="frame" x="143" y="179" width="500" height="148"/>
+                                <rect key="frame" x="143" y="198" width="500" height="111"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mjL-LD-1Gd">
                                         <rect key="frame" x="-2" y="0.0" width="238" height="148"/>
@@ -268,12 +268,22 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IhI-8J-Hna">
+                                <rect key="frame" x="359" y="317" width="68" height="31"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="ufR-mo-oXG">
+                                    <font key="font" metaFont="system" size="26"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="VlF-zQ-QGs" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="354" id="Gf6-17-wRb"/>
                             <constraint firstItem="A0Y-po-Znn" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="Ggh-uU-onZ"/>
+                            <constraint firstItem="A0Y-po-Znn" firstAttribute="top" secondItem="IhI-8J-Hna" secondAttribute="bottom" constant="8" id="TIy-Cl-MVA"/>
                             <constraint firstItem="VlF-zQ-QGs" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="13" id="VZ0-xt-B82"/>
                             <constraint firstItem="A0Y-po-Znn" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ZTk-k8-aM3"/>
+                            <constraint firstItem="IhI-8J-Hna" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="b10-Cx-h5i"/>
                             <constraint firstItem="hDu-dv-Cpa" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="hj7-00-eh8"/>
                             <constraint firstAttribute="bottom" secondItem="hDu-dv-Cpa" secondAttribute="bottom" constant="12" id="pJQ-RI-m2x"/>
                         </constraints>
@@ -281,6 +291,7 @@ DQ
                     <connections>
                         <outlet property="answerTextField" destination="2dc-mi-hEQ" id="b2G-Nc-Rmg"/>
                         <outlet property="equalSign" destination="GPp-PF-hKA" id="Gaa-pV-OVe"/>
+                        <outlet property="infoLabel" destination="IhI-8J-Hna" id="K7f-jS-M0l"/>
                         <outlet property="questionTextField" destination="mjL-LD-1Gd" id="fPx-67-K0U"/>
                         <outlet property="timerLabel" destination="hDu-dv-Cpa" id="4Ys-Jg-N7a"/>
                     </connections>

@@ -12,6 +12,7 @@ class WindowController: NSWindowController {
 
   override func windowDidLoad() {
     window?.toggleFullScreen(self)
+    window?.makeFirstResponder(window?.contentViewController)
   }
 
   override func makeTouchBar() -> NSTouchBar? {
