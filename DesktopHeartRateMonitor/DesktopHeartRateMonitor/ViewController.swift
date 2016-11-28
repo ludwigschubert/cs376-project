@@ -25,10 +25,14 @@ class ViewController: NSViewController {
 
   var heartRateSession: HeartRateSession = HeartRateSession.init()
 
+  let baseLineRounds : UInt64 = 3
+
+
   @IBOutlet var questionTextField: NSTextField!
   @IBOutlet var answerTextField: NSTextField!
   @IBOutlet var timerLabel: NSTextField!
 
+    @IBOutlet weak var equalSign: NSTextField!
   required init?(coder: NSCoder) {
     let questionSet = questionSetIterator.next()!
     questionsIterator = questionSet.makeIterator()
@@ -133,12 +137,15 @@ class ViewController: NSViewController {
     // Indicator Lights Stuff
     let dBmp = Double(bpm)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
-    var greenImage : NSImage
-    if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 && setCounter >= 2 {
+    var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
+    if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
     } else {
-        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
+        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
+        
+//        (calibratedRed: 242.0, green: 153.0, blue: 199.0, alpha:1.0))
     }
+    
     
     imageView1.image = image
     imageView2.image = image
@@ -147,11 +154,11 @@ class ViewController: NSViewController {
     imageView5.image = image
     
     //number of rounds to hide the touchbar indicator
-    imageView1.isHidden = setCounter < 2
-    imageView2.isHidden = setCounter < 2
-    imageView3.isHidden = setCounter < 2
-    imageView4.isHidden = setCounter < 2
-    imageView5.isHidden = setCounter < 2
+    imageView1.isHidden = setCounter < baseLineRounds
+    imageView2.isHidden = setCounter < baseLineRounds
+    imageView3.isHidden = setCounter < baseLineRounds
+    imageView4.isHidden = setCounter < baseLineRounds
+    imageView5.isHidden = setCounter < baseLineRounds
 
 
     
@@ -174,6 +181,45 @@ class ViewController: NSViewController {
     if dBmp > 1.2 * average {
       imageView5.image = greenImage
     }
+    
+    if setCounter >= baseLineRounds {
+        if dBmp > 1.2 * average {
+            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
+                touchBarLabelString = "Heart rate: SUPER HIGH"
+            } else {
+                touchBarLabelString = "Alertness: SUPER HIGH"
+            }
+        } else if dBmp > 1.1 * average {
+            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
+                touchBarLabelString = "Heart rate: HIGH"
+            } else {
+                touchBarLabelString = "Alertness: HIGH"
+            }
+        } else if dBmp > 1.0 * average {
+            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
+                touchBarLabelString = "Heart rate: NORMAL"
+            } else {
+                touchBarLabelString = "Alertness: NORMAL"
+            }
+        } else if dBmp > 0.9 * average {
+            
+            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
+                touchBarLabelString = "Heart rate: LOW"
+            } else {
+                touchBarLabelString = "Alertness: LOW"
+            }
+        } else if dBmp > 0.8 * average {
+            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 0 {
+                touchBarLabelString = "Heart rate: SUPER LOW"
+            } else {
+                touchBarLabelString = "Alertness: SUPER LOW"
+            }
+        }
+    }
+    
+
+    
+    
 
   }
 
@@ -183,21 +229,32 @@ class ViewController: NSViewController {
 
     // LineChart Stuff
     var color = NSColor.white
-    switch heartRateStatus {
-    case .Low:
-      color = NSColor.green
-      //TODO: change text and have this disappear during first 2 rounds
-      //TODO: if grey round just give heart rate
-      touchBarLabelString = "😴 You're not giving it your best…"
-      break
-    case .High:
-      color = NSColor.red
-      touchBarLabelString = "😎 You're getting pumped!"
-      break
-    default: //.Normal
-      touchBarLabelString = ""
-      break
-    }
+//    if setCounter >= baseLineRounds {
+//        switch heartRateStatus {
+//        case .Low:
+//            color = NSColor.green
+//            //TODO: change text and have this disappear during first 2 rounds
+//            //TODO: if grey round just give heart rate
+//            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
+//                touchBarLabelString = "Heart low"
+//            } else {
+//                touchBarLabelString = "😴 You're not giving it your best…"
+//            }
+//            break
+//        case .High:
+//            color = NSColor.red
+//            if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 {
+//                touchBarLabelString = "Heart rate high"
+//            } else {
+//                touchBarLabelString = "😎 You're getting pumped!"
+//            }
+//            break
+//        default: //.Normal
+//            touchBarLabelString = ""
+//            break
+//        }
+//    }
+    
     lineChartDataSet.colors = [color]
     lineChartDataSet.fillColor = color
     lineChartView.notifyDataSetChanged()
@@ -262,7 +319,12 @@ class ViewController: NSViewController {
         seconds = 60
         startSession()
       } else { // we're in a session, need to pause
-        seconds = 30
+        if setCounter == baseLineRounds-1 {
+            seconds = 90
+        } else {
+            seconds = 30
+
+        }
         endSession()
       }
     }
@@ -272,6 +334,7 @@ class ViewController: NSViewController {
   func endSession() {
     questionTextField.isHidden = true
     answerTextField.isHidden = true
+    equalSign.isHidden = true
 
     if let questionSet = questionSetIterator.next() {
       setCounter += 1
@@ -286,6 +349,7 @@ class ViewController: NSViewController {
   func startSession() {
     questionTextField.isHidden = false
     answerTextField.isHidden = false
+    equalSign.isHidden = false
 
     if let question = questionsIterator.next() {
       show(question: question)

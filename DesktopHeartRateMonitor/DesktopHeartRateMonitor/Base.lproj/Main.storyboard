@@ -49,12 +49,12 @@
                                 </connections>
                             </textField>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Nl-br-VNX">
-                                <rect key="frame" x="189" y="59" width="139" height="24"/>
+                                <rect key="frame" x="189" y="59" width="143" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="h8g-yr-ha2">
                                     <font key="font" metaFont="system"/>
                                     <segments>
-                                        <segment label="Grey" width="66"/>
-                                        <segment label="Green" width="66" selected="YES" tag="1"/>
+                                        <segment label="Group 1"/>
+                                        <segment label="Group 2" selected="YES" tag="1"/>
                                     </segments>
                                 </segmentedCell>
                                 <connections>
@@ -199,11 +199,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="786" height="506"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A0Y-po-Znn">
-                                <rect key="frame" x="90" y="168" width="500" height="111"/>
+                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A0Y-po-Znn">
+                                <rect key="frame" x="143" y="179" width="500" height="148"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mjL-LD-1Gd">
-                                        <rect key="frame" x="-2" y="0.0" width="250" height="111"/>
+                                        <rect key="frame" x="-2" y="0.0" width="238" height="148"/>
                                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" id="6sL-Ql-6w6">
                                             <font key="font" size="26" name="Menlo-Regular"/>
                                             <string key="title">Multiline Label
@@ -212,8 +212,16 @@ Let's make it multiline</string>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="GPp-PF-hKA">
+                                        <rect key="frame" x="240" y="55.5" width="20" height="37"/>
+                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="=" id="yxO-V7-c6y">
+                                            <font key="font" size="26" name="Menlo-Regular"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2dc-mi-hEQ">
-                                        <rect key="frame" x="254" y="37.5" width="246" height="36"/>
+                                        <rect key="frame" x="266" y="56" width="234" height="36"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="1TA-wx-HKv">
                                             <font key="font" metaFont="system" size="26"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -231,8 +239,10 @@ Let's make it multiline</string>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
@@ -270,6 +280,7 @@ DQ
                     </view>
                     <connections>
                         <outlet property="answerTextField" destination="2dc-mi-hEQ" id="b2G-Nc-Rmg"/>
+                        <outlet property="equalSign" destination="GPp-PF-hKA" id="Gaa-pV-OVe"/>
                         <outlet property="questionTextField" destination="mjL-LD-1Gd" id="fPx-67-K0U"/>
                         <outlet property="timerLabel" destination="hDu-dv-Cpa" id="4Ys-Jg-N7a"/>
                     </connections>
