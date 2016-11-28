@@ -132,12 +132,12 @@ class ViewController: NSViewController {
 
     // Indicator Lights Stuff
     let dBmp = Double(bpm)
-    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight").tinted(color: NSColor.darkGray)
+    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
     var greenImage : NSImage
     if UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1 && setCounter >= 2 {
-        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight").tinted(color: NSColor.green)
+        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
     } else {
-        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight")
+        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     }
     
     imageView1.image = image
@@ -145,7 +145,16 @@ class ViewController: NSViewController {
     imageView3.image = image
     imageView4.image = image
     imageView5.image = image
+    
+    //number of rounds to hide the touchbar indicator
+    imageView1.isHidden = setCounter < 2
+    imageView2.isHidden = setCounter < 2
+    imageView3.isHidden = setCounter < 2
+    imageView4.isHidden = setCounter < 2
+    imageView5.isHidden = setCounter < 2
 
+
+    
     if dBmp > 0.8 * average {
       imageView1.image = greenImage
     }
@@ -177,6 +186,8 @@ class ViewController: NSViewController {
     switch heartRateStatus {
     case .Low:
       color = NSColor.green
+      //change text and have this disappear during first 2 rounds
+      // if grey round just give heart rate
       touchBarLabelString = "😴 You're not giving it your best…"
       break
     case .High:

@@ -35,31 +35,31 @@ extension ViewController: NSTouchBarDelegate {
             return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem1:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-          let image = NSImage(named: "HeartRateIndicatorLight")
+          let image = NSImage(named: "HeartRateIndicatorLight5")
           self.imageView1.image = image
           customViewItem.view = imageView1
           return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem2:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-          let image = NSImage(named: "HeartRateIndicatorLight")
+          let image = NSImage(named: "HeartRateIndicatorLight5")
           self.imageView2.image = image
           customViewItem.view = imageView2
           return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem3:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-          let image = NSImage(named: "HeartRateIndicatorLight")
+          let image = NSImage(named: "HeartRateIndicatorLight5")
           self.imageView3.image = image
           customViewItem.view = imageView3
           return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem4:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-          let image = NSImage(named: "HeartRateIndicatorLight")
+          let image = NSImage(named: "HeartRateIndicatorLight5")
           self.imageView4.image = image
           customViewItem.view = imageView4
           return customViewItem
         case NSTouchBarItemIdentifier.heartRateIndicatorItem5:
           let customViewItem = NSCustomTouchBarItem(identifier: identifier)
-          let image = NSImage(named: "HeartRateIndicatorLight")
+          let image = NSImage(named: "HeartRateIndicatorLight5")
           self.imageView5.image = image
           customViewItem.view = imageView5
           return customViewItem
