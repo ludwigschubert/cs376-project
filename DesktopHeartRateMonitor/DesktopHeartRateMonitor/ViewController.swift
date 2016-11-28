@@ -154,11 +154,11 @@ class ViewController: NSViewController {
     imageView5.image = image
     
     //number of rounds to hide the touchbar indicator
-    imageView1.isHidden = setCounter < baseLineRounds
-    imageView2.isHidden = setCounter < baseLineRounds
-    imageView3.isHidden = setCounter < baseLineRounds
-    imageView4.isHidden = setCounter < baseLineRounds
-    imageView5.isHidden = setCounter < baseLineRounds
+    imageView1.isHidden = setCounter < baseLineRounds-1
+    imageView2.isHidden = setCounter < baseLineRounds-1
+    imageView3.isHidden = setCounter < baseLineRounds-1
+    imageView4.isHidden = setCounter < baseLineRounds-1
+    imageView5.isHidden = setCounter < baseLineRounds-1
 
 
     
