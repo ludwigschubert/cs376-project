@@ -27,6 +27,7 @@ class ViewController: NSViewController {
 
   let baseLineRounds : UInt64 = 3
   let isTreatmentCondition = UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1
+    let demonstrationMode = false //when demonstration mode is true it will always show the indicator
 
 
   @IBOutlet var questionTextField: NSTextField!
@@ -181,12 +182,15 @@ class ViewController: NSViewController {
     imageView4.image = image
     imageView5.image = image
     
+    if demonstrationMode == false {
+        imageView1.isHidden = setCounter < baseLineRounds-1
+        imageView2.isHidden = setCounter < baseLineRounds-1
+        imageView3.isHidden = setCounter < baseLineRounds-1
+        imageView4.isHidden = setCounter < baseLineRounds-1
+        imageView5.isHidden = setCounter < baseLineRounds-1
+
+    }
     //number of rounds to hide the touchbar indicator
-    imageView1.isHidden = setCounter < baseLineRounds-1
-    imageView2.isHidden = setCounter < baseLineRounds-1
-    imageView3.isHidden = setCounter < baseLineRounds-1
-    imageView4.isHidden = setCounter < baseLineRounds-1
-    imageView5.isHidden = setCounter < baseLineRounds-1
 
     if dBmp > 0.8 * average {
       imageView1.image = greenImage
@@ -208,7 +212,7 @@ class ViewController: NSViewController {
       imageView5.image = greenImage
     }
     
-    if setCounter >= baseLineRounds {
+    if demonstrationMode == true || setCounter >= baseLineRounds {
         if dBmp > 1.2 * average {
             if isTreatmentCondition {
                 touchBarLabelString = "Alertness: SUPER HIGH"

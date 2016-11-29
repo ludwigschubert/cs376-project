@@ -19,6 +19,7 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
 
     let heartRateServices = [CBUUID(string: "180A"), CBUUID(string: "180D")]
     let heartRateCharacteristicUUID = CBUUID(string: "2A37")
+    let heartRateSensorName = "Polar H7 BF6E1117"
 
     var centralManager : CBCentralManager?
     var peripheral: CBPeripheral?
@@ -39,12 +40,13 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if let name = advertisementData[CBAdvertisementDataLocalNameKey] {
-            print("Discovered: " + (name as! String))
-//            bpmLabel.stringValue = "Connecting to \(peripheral.name!)…"
-            central.stopScan()
-            central.connect(peripheral)
-            self.peripheral = peripheral
+        if let name = advertisementData[CBAdvertisementDataLocalNameKey] as! String? {
+            print("Discovered: " + name)
+            if name == heartRateSensorName {
+                central.stopScan()
+                central.connect(peripheral)
+                self.peripheral = peripheral
+            }
         }
     }
 
