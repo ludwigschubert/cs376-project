@@ -23,7 +23,20 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
 
   var centralManager : CBCentralManager?
   var peripheral: CBPeripheral?
-
+  
+  private enum HeartRateMeasurement: UInt8 {
+    case HeartRateValueFormatUInt8  = 0b00000000
+    case HeartRateValueFormatUInt16 = 0b00000001
+    case SensorContactIsSupported   = 0b00000100
+    case SensorContactDetected      = 0b00000110
+    case EnergyExpended             = 0b00001000
+    case RRInterval                 = 0b00010000
+    
+    func flagIsSet(flagData: UInt8) -> Bool {
+      return (flagData & self.rawValue) != 0
+    }
+  }
+  
   func connect() {
     centralManager = CBCentralManager(delegate: self, queue: DispatchQueue.main)
   }
@@ -96,45 +109,60 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
   {
     if characteristic.uuid == heartRateCharacteristicUUID {
-      if let rate = characteristic.value {
-
-        var buffer = [UInt8](repeating: 0x00, count: rate.count)
-        rate.copyBytes(to: &buffer, count: buffer.count)
-
-        // Compute Beats per Minute
-        var bpm : UInt16?
-        if (buffer.count >= 2){
-          if (buffer[0] & 0x01 == 0) {
-            bpm = UInt16(buffer[1]);
-          } else {
-            bpm = UInt16(buffer[1]) << 8
-            bpm =  bpm! | UInt16(buffer[2])
+      if let hrmData = characteristic.value {
+        
+        var heartRate = 0
+        var sensorDetected = false
+        var energyExpended : Int?
+        var rrIntervals = [Float]()
+        
+        var byteIndex = hrmData.startIndex // index into the measurement data of the next byte to read
+        
+        let hrmFlags = [UInt8](hrmData).first!
+        byteIndex += MemoryLayout<UInt8>.size
+        
+        if HeartRateMeasurement.HeartRateValueFormatUInt16.flagIsSet(flagData: hrmFlags) {
+          var value: UInt16 = 0
+          value = (UInt16(hrmData[byteIndex+1]) << 8) + UInt16(hrmData[byteIndex])
+          byteIndex += MemoryLayout<UInt16>.size
+          heartRate = Int(value)
+        } else {
+          var value: UInt8 = 0
+          value = hrmData[byteIndex]
+          byteIndex += MemoryLayout<UInt8>.size
+          heartRate = Int(value)
+        }
+        
+        if HeartRateMeasurement.SensorContactIsSupported.flagIsSet(flagData: hrmFlags) {
+          sensorDetected = HeartRateMeasurement.SensorContactDetected.flagIsSet(flagData: hrmFlags)
+        }
+        
+        if HeartRateMeasurement.EnergyExpended.flagIsSet(flagData: hrmFlags) {
+          var value: UInt16 = 0
+          value = (UInt16(hrmData[byteIndex+1]) << 8) + UInt16(hrmData[byteIndex])
+          byteIndex += MemoryLayout<UInt16>.size
+          energyExpended = Int(value)
+        }
+        
+        if HeartRateMeasurement.RRInterval.flagIsSet(flagData: hrmFlags) {
+          while byteIndex < hrmData.count {
+            var value: UInt16 = 0
+            value = (UInt16(hrmData[byteIndex+1]) << 8) + UInt16(hrmData[byteIndex])
+            byteIndex += MemoryLayout<UInt16>.size
+            rrIntervals.append(Float(value) / 1024.0)
           }
         }
-
-        // Compute Heart rate variability
-        var rrIntervalC1 : UInt16? // in 1/1024 s
-        var rrIntervalC2 : UInt16?
-        if (buffer.count >= 4){
-          rrIntervalC1 = UInt16(buffer[3])
-          rrIntervalC2 = UInt16(buffer[3]) << 8
-          rrIntervalC2 = rrIntervalC2! |  UInt16(buffer[4])
+        
+        print("Heart rate: \(heartRate)")
+        print("Sensor detected: \(sensorDetected)")
+        if let energyExpended = energyExpended {
+          print("Energy expended: \(energyExpended)")
         }
-
-        if let rr1 = rrIntervalC1 {
-          print("DEBUG Received RR1: \(rr1) 1/1024s")
-        }
-
-        if let rr2 = rrIntervalC2 {
-          print("DEBUG Received RR2: \(rr2) 1/1024s")
-        }
-
-
-        if let aBpm = bpm {
-          //                    print("Received Heart Rate: \(aBpm) Bpm")
-          if let aDelegate = delegate {
-            aDelegate.didReceive(bpm: Int(aBpm), sender: self);
-          }
+        print("RR Intervals: \(rrIntervals)")
+        
+        
+        if let aDelegate = delegate {
+          aDelegate.didReceive(bpm: heartRate, sender: self);
         }
       }
     }
