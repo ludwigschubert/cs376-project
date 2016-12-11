@@ -9,7 +9,6 @@
 
 import Foundation
 import CoreBluetooth
-import XCGLogger
 
 protocol HeartRateSensorDelegate: class {
   func didReceive(heartRateInfo: HeartRateInfo, sender: HeartRateSensor)
@@ -55,10 +54,10 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
   func centralManagerDidUpdateState(_ central: CBCentralManager)
   {
     if (central.state == CBCentralManagerState.poweredOn) {
-      logger.verbose("Bluetooth is powered on!")
+      print("Bluetooth is powered on!")
       central.scanForPeripherals(withServices: heartRateServices, options: nil)
     } else {
-      logger.warning("CBCentralManagerState not powered on?")
+      print("CBCentralManagerState not powered on?")
     }
   }
 

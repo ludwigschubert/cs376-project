@@ -7,9 +7,6 @@
 //
 
 import Cocoa
-import XCGLogger
-
-let logger = XCGLogger.default
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -26,15 +23,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   //MARK:- Setup
-
-  //MARK: Logging
-
-  func setupLogging()
-  {
-    // Add basic app info, version info etc, to the start of the logs
-    logger.logAppDetails()
-  }
-
 
   //MARK: Touch Bar
 

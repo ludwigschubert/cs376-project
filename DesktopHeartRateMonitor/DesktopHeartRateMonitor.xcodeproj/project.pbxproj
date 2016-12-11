@@ -18,7 +18,6 @@
 		02734A9A1DD0412500430705 /* HeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02734A991DD0412500430705 /* HeartRateSensor.swift */; };
 		027A371C1DFDF0F30005CC27 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; };
 		027A371D1DFDF0F30005CC27 /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		027A371F1DFDF3BB0005CC27 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A371E1DFDF3BB0005CC27 /* Logging.swift */; };
 		027A37231DFDFFB80005CC27 /* Array+statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A37221DFDFFB80005CC27 /* Array+statistics.swift */; };
 		027A37271DFE0B6C0005CC27 /* Date+iso8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */; };
 		02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EC1DC6E74000740F87 /* AppDelegate.swift */; };
@@ -91,7 +90,6 @@
 		026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateStatusBarController.swift; sourceTree = "<group>"; };
 		02734A991DD0412500430705 /* HeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateSensor.swift; sourceTree = "<group>"; };
 		027A371B1DFDF0F30005CC27 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/Mac/XCGLogger.framework; sourceTree = "<group>"; };
-		027A371E1DFDF3BB0005CC27 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		027A37201DFDF7600005CC27 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
 		027A37221DFDFFB80005CC27 /* Array+statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+statistics.swift"; sourceTree = "<group>"; };
 		027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+iso8601.swift"; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 				027A37221DFDFFB80005CC27 /* Array+statistics.swift */,
 				025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */,
 				027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */,
-				027A371E1DFDF3BB0005CC27 /* Logging.swift */,
 				027A37201DFDF7600005CC27 /* Cartfile */,
 			);
 			path = DesktopHeartRateMonitor;
@@ -351,7 +348,6 @@
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
 				021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */,
 				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,
-				027A371F1DFDF3BB0005CC27 /* Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
