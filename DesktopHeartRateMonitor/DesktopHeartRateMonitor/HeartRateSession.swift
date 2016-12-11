@@ -10,27 +10,26 @@ import Foundation
 
 class HeartRateSession: NSObject {
 
-    override init() {
-        startedOn = Date.init();
-    }
+  override init() {
+    startedOn = Date.init();
+  }
 
-    var startedOn:Date;
-    var endedOn:Date?;
-    var participantName = "";
-    var bpmValues:[(Int, Date)] = [];
-    var answers:[(Bool, TimeInterval)] = [];
+  var startedOn:Date;
+  var endedOn:Date?;
+  var participantName = "";
+  var heartRateInfos:[HeartRateInfo] = [];
+  var actions:[(Date, TimeInterval, String, Bool)] = [];
 
-    func record(bpmValue: Int) {
-        let entry = (bpmValue, Date.init())
-        bpmValues.append(entry)
-    }
+  func record(heartRateInfo: HeartRateInfo) {
+    heartRateInfos.append(heartRateInfo)
+  }
 
-    func record(gotAnswerCorrect: Bool, afterTimeInterval: TimeInterval) {
-        let entry = (gotAnswerCorrect, afterTimeInterval)
-        answers.append(entry)
-    }
+  func record(date: Date, duration: TimeInterval, answer: String, correct: Bool) {
+    let entry = (date, duration, answer, correct)
+    actions.append(entry)
+  }
 
-    func end() {
-        endedOn = Date.init()
-    }
+  func end() {
+    endedOn = Date.init()
+  }
 }

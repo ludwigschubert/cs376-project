@@ -28,7 +28,7 @@ class FakeHeartRateSensor : HeartRateSensor {
   }
 
   func fakeHeartBeat() {
-    guard let delegate = delegate else {
+    guard let delegate = maybeDelegate else {
       return
     }
 
@@ -41,7 +41,13 @@ class FakeHeartRateSensor : HeartRateSensor {
     }
     let σ = 8.0 // 8.0 is cutoff for calibration, so should eventually succeed
     let fakeHeartRate = Int( gaussian(µ, σ) )
-    delegate.didReceive(bpm: fakeHeartRate, sender: self);
+    let fakeRR = 60.0 / Float(fakeHeartRate)
+    let hrInfo = HeartRateInfo(heartRate: fakeHeartRate,
+                               rr: fakeRR,
+                               sensorDetected: true,
+                               energyExpended: nil,
+                               date: Date())
+    delegate.didReceive(heartRateInfo: hrInfo, sender: self);
   }
 
   private func gaussian(_ µ: Double = 0, _ σ: Double = 1.0) -> Double {

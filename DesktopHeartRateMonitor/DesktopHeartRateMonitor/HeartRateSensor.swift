@@ -12,12 +12,20 @@ import CoreBluetooth
 import XCGLogger
 
 protocol HeartRateSensorDelegate: class {
-  func didReceive(bpm: Int, sender: HeartRateSensor)
+  func didReceive(heartRateInfo: HeartRateInfo, sender: HeartRateSensor)
+}
+
+struct HeartRateInfo {
+  let heartRate: Int
+  let rr: Float
+  let sensorDetected: Bool
+  let energyExpended: Int?
+  let date: Date
 }
 
 class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
-  weak var delegate:HeartRateSensorDelegate?
+  weak var maybeDelegate : HeartRateSensorDelegate?
 
   let heartRateServices = [CBUUID(string: "180A"), CBUUID(string: "180D")]
   let heartRateCharacteristicUUID = CBUUID(string: "2A37")
@@ -110,6 +118,9 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
 
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
   {
+    guard let delegate = maybeDelegate else {
+      return
+    }
     if characteristic.uuid == heartRateCharacteristicUUID {
       if let hrmData = characteristic.value {
         
@@ -154,18 +165,15 @@ class HeartRateSensor: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate 
             rrIntervals.append(Float(value) / 1024.0)
           }
         }
-        
-        print("Heart rate: \(heartRate)")
-        print("Sensor detected: \(sensorDetected)")
-        if let energyExpended = energyExpended {
-          print("Energy expended: \(energyExpended)")
-        }
-        print("RR Intervals: \(rrIntervals)")
-        
-        
-        if let aDelegate = delegate {
-          aDelegate.didReceive(bpm: heartRate, sender: self);
-        }
+
+        let heartRateInfo = HeartRateInfo(heartRate: heartRate,
+                                          rr: rrIntervals.average,
+                                          sensorDetected: sensorDetected,
+                                          energyExpended: energyExpended,
+                                          date: Date())
+
+        delegate.didReceive(heartRateInfo: heartRateInfo, sender: self);
+
       }
     }
   }

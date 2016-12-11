@@ -10,47 +10,76 @@ import Foundation
 
 class HeartRateSessionWriter: NSObject {
 
-    static func write(heartRateSession: HeartRateSession)
-    {
-        let valuesString = serialize(heartRateSession: heartRateSession)
-        let dateString = heartRateSession.startedOn.description
-        let participantName = UserDefaults.standard.value(forKey: "participantName")
-        let fileName = "\(participantName)_\(dateString).txt"
+  static let manager = FileManager.default
+  static let defaults = UserDefaults.standard
 
-        if let dir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first {
-            
-            let path = dir.appendingPathComponent("Heart Rate Sessions")
-            let filePath = path.appendingPathComponent(fileName)
-            
-            do {
-                try valuesString.write(to: filePath, atomically: false, encoding: String.Encoding.utf8)
-            }
-            catch {
-                print("Could not write to \(path)!")
-            }
-
-        }
+  static func write(heartRateSession: HeartRateSession)
+  {
+    guard let dir = manager.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
+      print("Can't access Downloads directory for writing session file!")
+      return
     }
 
-    static func serialize(heartRateSession: HeartRateSession) -> String
-    {
-        var outputString = "";
+    let valuesString = serialize(heartRateSession)
+    let file = fileName(for: heartRateSession)
+    let path = dir.appendingPathComponent("Heart Rate Sessions")
+    let filePath = path.appendingPathComponent(file)
 
-        outputString += heartRateSession.participantName + "\n"
-        outputString += "started on " + heartRateSession.startedOn.description + "\n"
-        outputString += "ended on " + heartRateSession.endedOn!.description + "\n"
-
-        outputString += heartRateSession.bpmValues.map { (bpm, date) -> String in
-            "\(bpm), \(date)"
-        }.joined(separator: "\n")
-
-        outputString += "\n"
-
-        outputString += heartRateSession.answers.map { (correct, timeInterval) -> String in
-            "\(correct), \(timeInterval)"
-            }.joined(separator: "\n")
-
-        return outputString
+    do {
+      try manager.createDirectory(at: path,
+                                  withIntermediateDirectories: true,
+                                  attributes: nil)
+      try valuesString.write(to: filePath,
+                             atomically: false,
+                             encoding: String.Encoding.utf8)
+    } catch {
+      print("Could not write at \(path)!")
     }
 
+  }
+
+  static func fileName(for heartRateSession: HeartRateSession) -> String{
+    let date = heartRateSession.startedOn.urlSafeString
+    if let participant = defaults.value(forKey: "participantName") {
+      return "\(participant)_\(date).txt"
+    } else {
+      return "Anonymous_\(date).txt"
+    }
+
+  }
+
+  static func serialize(_ heartRateSession: HeartRateSession) -> String
+  {
+    var outputString = "";
+
+    if let participant = defaults.value(forKey: "participantName") {
+      outputString += "\(participant)\n"
+    }
+    outputString += "started on " + heartRateSession.startedOn.iso8601 + "\n\n"
+    if let endedOn = heartRateSession.endedOn {
+      outputString += "ended on " + endedOn.iso8601 + "\n\n"
+    }
+
+    outputString += "Date, HR, RR\n"
+    outputString += heartRateSession.heartRateInfos.map { (info) -> String in
+        let fields = [info.date.iso8601,
+                      info.heartRate.description,
+                      info.rr.description]
+        return fields.joined(separator: ", ")
+      }.joined(separator: "\n")
+
+    outputString += "\n\n"
+
+    outputString += "Date, Duration, Answer, Correct\n"
+    outputString += heartRateSession.actions.map { (date, duration, answer, correct) -> String in
+      let fields = [date.iso8601,
+                    duration.description,
+                    answer,
+                    correct.description]
+      return fields.joined(separator: ", ")
+      }.joined(separator: "\n")
+    
+    return outputString
+  }
+  
 }

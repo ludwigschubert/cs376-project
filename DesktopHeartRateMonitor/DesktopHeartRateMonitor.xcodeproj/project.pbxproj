@@ -19,6 +19,8 @@
 		027A371C1DFDF0F30005CC27 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; };
 		027A371D1DFDF0F30005CC27 /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		027A371F1DFDF3BB0005CC27 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A371E1DFDF3BB0005CC27 /* Logging.swift */; };
+		027A37231DFDFFB80005CC27 /* Array+statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A37221DFDFFB80005CC27 /* Array+statistics.swift */; };
+		027A37271DFE0B6C0005CC27 /* Date+iso8601.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */; };
 		02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EC1DC6E74000740F87 /* AppDelegate.swift */; };
 		02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EE1DC6E74000740F87 /* ViewController.swift */; };
 		02F060F11DC6E74000740F87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F060F01DC6E74000740F87 /* Assets.xcassets */; };
@@ -91,6 +93,8 @@
 		027A371B1DFDF0F30005CC27 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/Mac/XCGLogger.framework; sourceTree = "<group>"; };
 		027A371E1DFDF3BB0005CC27 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		027A37201DFDF7600005CC27 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
+		027A37221DFDFFB80005CC27 /* Array+statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+statistics.swift"; sourceTree = "<group>"; };
+		027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+iso8601.swift"; sourceTree = "<group>"; };
 		02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopHeartRateMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02F060EC1DC6E74000740F87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02F060EE1DC6E74000740F87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -145,9 +149,9 @@
 				839B47EE1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift */,
 				02F060EE1DC6E74000740F87 /* ViewController.swift */,
 				839B47EC1DE5238400333AC3 /* WindowController.swift */,
+				023A54BC1DEA87D900A2A726 /* SetupViewController.swift */,
 				021E1E671DE514920056F1E9 /* TouchBar */,
 				021E1E681DE514970056F1E9 /* StatusBar */,
-				023A54BC1DEA87D900A2A726 /* SetupViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -197,7 +201,9 @@
 				02F060F01DC6E74000740F87 /* Assets.xcassets */,
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
+				027A37221DFDFFB80005CC27 /* Array+statistics.swift */,
 				025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */,
+				027A37261DFE0B6C0005CC27 /* Date+iso8601.swift */,
 				027A371E1DFDF3BB0005CC27 /* Logging.swift */,
 				027A37201DFDF7600005CC27 /* Cartfile */,
 			);
@@ -332,6 +338,7 @@
 				839B47ED1DE5238400333AC3 /* WindowController.swift in Sources */,
 				026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */,
 				025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */,
+				027A37271DFE0B6C0005CC27 /* Date+iso8601.swift in Sources */,
 				023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */,
 				839B47EF1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift in Sources */,
 				021A47D51DC91F7700B980E7 /* Question.swift in Sources */,
@@ -340,6 +347,7 @@
 				026E7F261DE3ACA800EBA6B2 /* HeartRateManager.swift in Sources */,
 				021E1E5F1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift in Sources */,
 				026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */,
+				027A37231DFDFFB80005CC27 /* Array+statistics.swift in Sources */,
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
 				021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */,
 				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,

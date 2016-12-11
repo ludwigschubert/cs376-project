@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func setupHeartRateSensor()
   {
-    heartRateSensor.delegate = heartRateManager
+    heartRateSensor.maybeDelegate = heartRateManager
     heartRateSensor.connect()
   }
 

@@ -143,15 +143,17 @@ class ViewController: NSViewController {
   //MARK:- IBActions
 
   func didReceiveHeartRate(notification: Notification) {
+    guard let userInfo = notification.userInfo,
+          let hrInfo = userInfo["heartRateInfo"] as? HeartRateInfo,
+          let average = userInfo["average"] as? Double else {
+      print("didReceiveHeartRate preconditions not satisfied!!!")
+      print(notification.userInfo!)
+      return
+    }
     globalCounter += 1
-    let userInfo = notification.userInfo!
-    let bpm = userInfo["bpm"] as! Int
-//    touchBarLabelString = "\(bpm) bpm"
-    let average = userInfo["average"] as! Double
-    heartRateSession.record(bpmValue: bpm);
-    let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(bpm))
-    let addedSuccessfully = lineChartDataSet.addEntry(chartDataEntry)
-    if addedSuccessfully {
+    heartRateSession.record(heartRateInfo: hrInfo);
+    let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(hrInfo.heartRate))
+    if lineChartDataSet.addEntry(chartDataEntry) {
       if lineChartDataSet.entryCount > 11 {
         let removedSuccesfully = lineChartDataSet.removeFirst()
         if !removedSuccesfully {
@@ -166,7 +168,7 @@ class ViewController: NSViewController {
     lineChartView.layer?.masksToBounds = true;
 
     // Indicator Lights Stuff
-    let dBmp = Double(bpm)
+    let dBmp = Double(hrInfo.heartRate)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
     var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     if isTreatmentCondition {
@@ -291,20 +293,18 @@ class ViewController: NSViewController {
   }
 
   @IBAction func submitAnswer(_ sender: Any) {
-    print("Submit pressed!")
-
     let originalLayerColor = self.view.layer?.backgroundColor
 
     let answer = answerTextField.stringValue.trimmingCharacters(in: .whitespaces)
     let gotAnswerCorrect = answer == currentQuestion.answer
-    let timeInterval = currentStartTime.timeIntervalSinceNow
+    let duration = -currentStartTime.timeIntervalSinceNow
 
     if gotAnswerCorrect {
       self.view.layer?.backgroundColor = NSColor(red:0.56, green:0.93, blue:0.56, alpha:1.0).cgColor
     } else {
       self.view.layer?.backgroundColor = NSColor(red:0.93, green:0.56, blue:0.56, alpha:1.0).cgColor
     }
-    heartRateSession.record(gotAnswerCorrect: gotAnswerCorrect, afterTimeInterval: timeInterval)
+    heartRateSession.record(date: Date(), duration: duration, answer: answer, correct: gotAnswerCorrect)
 
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1),
                                   execute: {
@@ -394,7 +394,6 @@ class ViewController: NSViewController {
   }
 
   func returnWasPressed() {
-    print("returnWasPressed")
     if isPaused {
       isPaused = false
     } else {
