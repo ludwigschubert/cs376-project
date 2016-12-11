@@ -16,6 +16,9 @@
 		026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */; };
 		026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */; };
 		02734A9A1DD0412500430705 /* HeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02734A991DD0412500430705 /* HeartRateSensor.swift */; };
+		027A371C1DFDF0F30005CC27 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; };
+		027A371D1DFDF0F30005CC27 /* XCGLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027A371B1DFDF0F30005CC27 /* XCGLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		027A371F1DFDF3BB0005CC27 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027A371E1DFDF3BB0005CC27 /* Logging.swift */; };
 		02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EC1DC6E74000740F87 /* AppDelegate.swift */; };
 		02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F060EE1DC6E74000740F87 /* ViewController.swift */; };
 		02F060F11DC6E74000740F87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F060F01DC6E74000740F87 /* Assets.xcassets */; };
@@ -68,6 +71,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				02F0611D1DC7043C00740F87 /* Charts.framework in Embed Frameworks */,
+				027A371D1DFDF0F30005CC27 /* XCGLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +88,9 @@
 		026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHeartRateSensor.swift; sourceTree = "<group>"; };
 		026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateStatusBarController.swift; sourceTree = "<group>"; };
 		02734A991DD0412500430705 /* HeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateSensor.swift; sourceTree = "<group>"; };
+		027A371B1DFDF0F30005CC27 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/Mac/XCGLogger.framework; sourceTree = "<group>"; };
+		027A371E1DFDF3BB0005CC27 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		027A37201DFDF7600005CC27 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
 		02F060E91DC6E74000740F87 /* DesktopHeartRateMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesktopHeartRateMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02F060EC1DC6E74000740F87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02F060EE1DC6E74000740F87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +112,7 @@
 			files = (
 				02F060FD1DC6E75E00740F87 /* CoreBluetooth.framework in Frameworks */,
 				02F0611C1DC7043C00740F87 /* Charts.framework in Frameworks */,
+				027A371C1DFDF0F30005CC27 /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +198,8 @@
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
 				025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */,
+				027A371E1DFDF3BB0005CC27 /* Logging.swift */,
+				027A37201DFDF7600005CC27 /* Cartfile */,
 			);
 			path = DesktopHeartRateMonitor;
 			sourceTree = "<group>";
@@ -197,6 +207,7 @@
 		02F060FB1DC6E75E00740F87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				027A371B1DFDF0F30005CC27 /* XCGLogger.framework */,
 				02F060FC1DC6E75E00740F87 /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
@@ -246,7 +257,7 @@
 				TargetAttributes = {
 					02F060E81DC6E74000740F87 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = EVX98G2B7C;
+						DevelopmentTeam = CD6WSVH5P2;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -332,6 +343,7 @@
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
 				021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */,
 				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,
+				027A371F1DFDF3BB0005CC27 /* Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +468,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;
@@ -473,7 +489,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = DesktopHeartRateMonitor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12.1;

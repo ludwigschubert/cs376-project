@@ -7,36 +7,56 @@
 //
 
 import Cocoa
+import XCGLogger
+
+let logger = XCGLogger.default
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    let heartRateSensor = HeartRateSensor()
-    let heartRateManager = HeartRateManager()
-    var viewController : ViewController!
-    var statusBar : HeartRateStatusBarController?
+  func applicationDidFinishLaunching(_ aNotification: Notification)
+  {
+    setupTouchBar()
+    setupHeartRateSensor()
+  }
 
-    func applicationDidFinishLaunching(_ aNotification: Notification)
-    {
-        // late initialization, so VCs are ready
-        statusBar = HeartRateStatusBarController()
+  func applicationWillTerminate(_ aNotification: Notification)
+  {
+    // Insert code here to tear down your application
+  }
 
-        // Connect Heart Rate Sensor
-        heartRateSensor.connect()
-        heartRateSensor.delegate = heartRateManager
+  //MARK:- Setup
 
-        // Get reference of ViewController
-//        let window = NSApplication.shared().mainWindow!
-//        viewController = window.contentViewController! as! ViewController
+  //MARK: Logging
 
-        // Set up touch bar customization
-        NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
-    }
+  func setupLogging()
+  {
+    // Add basic app info, version info etc, to the start of the logs
+    logger.logAppDetails()
+  }
 
-    func applicationWillTerminate(_ aNotification: Notification)
-    {
-        // Insert code here to tear down your application
-    }
+
+  //MARK: Touch Bar
+
+  var statusBar : HeartRateStatusBarController? // late initialization, so VCs are ready
+
+  func setupTouchBar()
+  {
+    NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+    statusBar = HeartRateStatusBarController()
+  }
+
+  //MARK: Heart Rate Sensing
+
+  let heartRateSensor = FakeHeartRateSensor()
+  let heartRateManager = HeartRateManager()
+
+  func setupHeartRateSensor()
+  {
+    heartRateSensor.delegate = heartRateManager
+    heartRateSensor.connect()
+  }
+
 
 
 }
