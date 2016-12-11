@@ -70,12 +70,13 @@ class HeartRateSessionWriter: NSObject {
 
     outputString += "\n\n"
 
-    outputString += "Date, Duration, Answer, Correct\n"
-    outputString += heartRateSession.actions.map { (date, duration, answer, correct) -> String in
+    outputString += "Date, Duration, Answer, Correct, Set\n"
+    outputString += heartRateSession.actions.map { (date, duration, answer, correct, set) -> String in
       let fields = [date.iso8601,
                     duration.description,
                     answer,
-                    correct.description]
+                    correct.description,
+                    set.description]
       return fields.joined(separator: ", ")
       }.joined(separator: "\n")
     

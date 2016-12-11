@@ -18,14 +18,14 @@ class HeartRateSession: NSObject {
   var endedOn:Date?;
   var participantName = "";
   var heartRateInfos:[HeartRateInfo] = [];
-  var actions:[(Date, TimeInterval, String, Bool)] = [];
+  var actions:[(Date, TimeInterval, String, Bool, Int)] = [];
 
   func record(heartRateInfo: HeartRateInfo) {
     heartRateInfos.append(heartRateInfo)
   }
 
-  func record(date: Date, duration: TimeInterval, answer: String, correct: Bool) {
-    let entry = (date, duration, answer, correct)
+  func record(date: Date, duration: TimeInterval, answer: String, correct: Bool, set: Int) {
+    let entry = (date, duration, answer, correct, set)
     actions.append(entry)
   }
 

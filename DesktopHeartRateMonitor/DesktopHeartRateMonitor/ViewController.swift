@@ -304,7 +304,7 @@ class ViewController: NSViewController {
     } else {
       self.view.layer?.backgroundColor = NSColor(red:0.93, green:0.56, blue:0.56, alpha:1.0).cgColor
     }
-    heartRateSession.record(date: Date(), duration: duration, answer: answer, correct: gotAnswerCorrect)
+    heartRateSession.record(date: Date(), duration: duration, answer: answer, correct: gotAnswerCorrect, set: Int(setCounter))
 
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1),
                                   execute: {
