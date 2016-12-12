@@ -171,12 +171,12 @@ class ViewController: NSViewController {
     // Indicator Lights Stuff
     let dBmp = Double(hrInfo.heartRate)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
-    var flashImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
+    var flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
     var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     if isTreatmentCondition {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
-      flashImage = flashImage.tinted(color: NSColor(red: 153.0, green: 255.0, blue: 102.0, alpha: 1.0))
-          
+//      flashImage = flashImage.tinted(color: NSColor(red: 153.0, green: 255.0, blue: 102.0, alpha: 1.0))
+      
           
 //          tintedImage(#imageLiteral(resourceName: "HeartRateIndicatorLight5"), tint: )
     } else {
@@ -229,74 +229,74 @@ class ViewController: NSViewController {
       }
       
       if newBucket != bucket {
-        NSSound(named: "Pop")?.play()
+        NSSound(named: "Pop")?.play() // we can play around with different sounds
         
-        let delay = 0.2
-        switch newBucket {
-        case 1:
-          imageView1.image = flashImage
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            
-          }
-        case 2:
-          imageView1.image = flashImage
-          imageView2.image = flashImage
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            self.imageView2.image = greenImage
-          }
-        case 3:
-          imageView1.image = flashImage
-          imageView2.image = flashImage
-          imageView3.image = flashImage
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            self.imageView2.image = greenImage
-            self.imageView3.image = greenImage
-          }
-        case 4:
-          imageView1.image = flashImage
-          imageView2.image = flashImage
-          imageView3.image = flashImage
-          imageView4.image = flashImage
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            self.imageView2.image = greenImage
-            self.imageView3.image = greenImage
-            self.imageView4.image = greenImage
-          }
-        case 5:
-          imageView1.image = flashImage
-          imageView2.image = flashImage
-          imageView3.image = flashImage
-          imageView4.image = flashImage
-          imageView5.image = flashImage
-          
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            self.imageView2.image = greenImage
-            self.imageView3.image = greenImage
-            self.imageView4.image = greenImage
-            self.imageView5.image = greenImage
-          }
-        default:
-          imageView1.image = flashImage
-          let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-          DispatchQueue.main.asyncAfter(deadline: when) {
-            self.imageView1.image = greenImage
-            
-          }
-        }
         //NSBeep()
         //later implementation can have different sound for different levels or going up vs. going down
       }
       
+      let delay = 0.18
+      switch newBucket {
+      case 1:
+        imageView1.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          
+        }
+      case 2:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+        }
+      case 3:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+        }
+      case 4:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        imageView4.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+          self.imageView4.image = greenImage
+        }
+      case 5:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        imageView4.image = flashImage
+        imageView5.image = flashImage
+        
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+          self.imageView4.image = greenImage
+          self.imageView5.image = greenImage
+        }
+      default:
+        imageView1.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          
+        }
+      }
       
       
       bucket = newBucket
