@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   //MARK: Heart Rate Sensing
 
-  let heartRateSensor = FakeHeartRateSensor()
+  let heartRateSensor = HeartRateSensor()
   let heartRateManager = HeartRateManager()
 
   func setupHeartRateSensor()

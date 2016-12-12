@@ -16,7 +16,7 @@ extension ViewController: NSTouchBarDelegate {
         let touchBar = NSTouchBar()
         touchBar.delegate = self
         touchBar.customizationIdentifier = .heartRateBar
-        touchBar.defaultItemIdentifiers = [.heartRateIndicatorItem1, .heartRateIndicatorItem2, .heartRateIndicatorItem3, .heartRateIndicatorItem4, .heartRateIndicatorItem5, .heartRateStatusLabelItem]
+        touchBar.defaultItemIdentifiers = [.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge,.fixedSpaceLarge, .heartRateStatusLabelItem, .heartRateIndicatorItem1, .heartRateIndicatorItem2, .heartRateIndicatorItem3, .heartRateIndicatorItem4, .heartRateIndicatorItem5]
         touchBar.customizationAllowedItemIdentifiers = touchBar.defaultItemIdentifiers
         return touchBar
     }

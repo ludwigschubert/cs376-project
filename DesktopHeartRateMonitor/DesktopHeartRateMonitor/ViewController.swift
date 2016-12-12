@@ -25,10 +25,11 @@ class ViewController: NSViewController {
 
   var heartRateSession: HeartRateSession = HeartRateSession.init()
 
-  let baseLineRounds : UInt64 = 3
+  let baseLineRounds : UInt64 = 3 //will actually be this number minus 1
   let isTreatmentCondition = UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1
     let demonstrationMode = false //when demonstration mode is true it will always show the indicator
 
+  var bucket = 1
 
   @IBOutlet var questionTextField: NSTextField!
   @IBOutlet var answerTextField: NSTextField!
@@ -170,9 +171,14 @@ class ViewController: NSViewController {
     // Indicator Lights Stuff
     let dBmp = Double(hrInfo.heartRate)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
+    var flashImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     if isTreatmentCondition {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
+      flashImage = flashImage.tinted(color: NSColor(red: 153.0, green: 255.0, blue: 102.0, alpha: 1.0))
+          
+          
+//          tintedImage(#imageLiteral(resourceName: "HeartRateIndicatorLight5"), tint: )
     } else {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
 //        (calibratedRed: 242.0, green: 153.0, blue: 199.0, alpha:1.0))
@@ -184,73 +190,152 @@ class ViewController: NSViewController {
     imageView4.image = image
     imageView5.image = image
     
+    
     if demonstrationMode == false {
-        imageView1.isHidden = setCounter < baseLineRounds-1
-        imageView2.isHidden = setCounter < baseLineRounds-1
-        imageView3.isHidden = setCounter < baseLineRounds-1
-        imageView4.isHidden = setCounter < baseLineRounds-1
-        imageView5.isHidden = setCounter < baseLineRounds-1
-
+      imageView1.isHidden = setCounter < baseLineRounds
+      imageView2.isHidden = setCounter < baseLineRounds
+      imageView3.isHidden = setCounter < baseLineRounds
+      imageView4.isHidden = setCounter < baseLineRounds
+      imageView5.isHidden = setCounter < baseLineRounds
+      
     }
     //number of rounds to hide the touchbar indicator
+    if demonstrationMode == true || setCounter > baseLineRounds-1 {
 
-    if dBmp > 0.8 * average {
-      imageView1.image = greenImage
-    }
-
-    if dBmp > 0.9 * average {
-      imageView2.image = greenImage
-    }
-
-    if dBmp > 1.0 * average {
-      imageView3.image = greenImage
-    }
-
-    if dBmp > 1.1 * average {
-      imageView4.image = greenImage
-    }
-
-    if dBmp > 1.2 * average {
-      imageView5.image = greenImage
-    }
-    
-    if demonstrationMode == true || setCounter >= baseLineRounds {
-        if dBmp > 1.2 * average {
-            if isTreatmentCondition {
-                touchBarLabelString = "Alertness: SUPER HIGH"
-            } else {
-                touchBarLabelString = "Heart rate: SUPER HIGH"
-            }
-        } else if dBmp > 1.1 * average {
-            if isTreatmentCondition {
-                touchBarLabelString = "Alertness: HIGH"
-            } else {
-                touchBarLabelString = "Heart rate: HIGH"
-            }
-        } else if dBmp > 1.0 * average {
-            if isTreatmentCondition {
-                touchBarLabelString = "Alertness: NORMAL"
-            } else {
-                touchBarLabelString = "Heart rate: NORMAL"
-            }
-        } else if dBmp > 0.9 * average {
-            
-            if isTreatmentCondition {
-                touchBarLabelString = "Alertness: LOW"
-            } else {
-                touchBarLabelString = "Heart rate: LOW"
-            }
-        } else if dBmp > 0.8 * average {
-            if isTreatmentCondition {
-                touchBarLabelString = "Alertness: SUPER LOW"
-            } else {
-                touchBarLabelString = "Heart rate: SUPER LOW"
-            }
+      
+      var newBucket = 1
+      if dBmp > 0.8 * average {
+        self.imageView1.image = greenImage
+      }
+      
+      if dBmp > 0.9 * average {
+        newBucket = 2
+        self.imageView2.image = greenImage
+      }
+      
+      if dBmp > 1.0 * average {
+        newBucket = 3
+        self.imageView3.image = greenImage
+      }
+      
+      if dBmp > 1.1 * average {
+        newBucket = 4
+        self.imageView4.image = greenImage
+      }
+      
+      if dBmp > 1.2 * average {
+        newBucket = 5
+        self.imageView5.image = greenImage
+      }
+      
+      if newBucket != bucket {
+        NSSound(named: "Pop")?.play()
+        //NSBeep()
+        //later implementation can have different sound for different levels or going up vs. going down
+      }
+      
+      let delay = 0.1
+      switch newBucket {
+      case 1:
+        imageView1.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          
         }
+      case 2:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+        }
+      case 3:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+        }
+      case 4:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        imageView4.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+          self.imageView4.image = greenImage
+        }
+      case 5:
+        imageView1.image = flashImage
+        imageView2.image = flashImage
+        imageView3.image = flashImage
+        imageView4.image = flashImage
+        imageView5.image = flashImage
+        
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          self.imageView2.image = greenImage
+          self.imageView3.image = greenImage
+          self.imageView4.image = greenImage
+          self.imageView5.image = greenImage
+        }
+      default:
+        imageView1.image = flashImage
+        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+          self.imageView1.image = greenImage
+          
+        }
+      }
+      
+      bucket = newBucket
+      
+      
+      if dBmp > 1.2 * average {
+        if isTreatmentCondition {
+          
+          touchBarLabelString = "Alertness: SUPER HIGH"
+        } else {
+          touchBarLabelString = "   Stress: SUPER HIGH"
+        }
+      } else if dBmp > 1.1 * average {
+        if isTreatmentCondition {
+          touchBarLabelString = "      Alertness: HIGH"
+        } else {
+          touchBarLabelString = "         Stress: HIGH"
+        }
+      } else if dBmp > 1.0 * average {
+        if isTreatmentCondition {
+          touchBarLabelString = "    Alertness: NORMAL"
+        } else {
+          touchBarLabelString = "       Stress: NORMAL"
+        }
+      } else if dBmp > 0.9 * average {
+        
+        if isTreatmentCondition {
+          touchBarLabelString = "       Alertness: LOW"
+        } else {
+          touchBarLabelString = "          Stress: LOW"
+        }
+      } else if dBmp > 0.8 * average {
+        if isTreatmentCondition {
+          touchBarLabelString = " Alertness: SUPER LOW"
+        } else {
+          touchBarLabelString = "    Stress: SUPER LOW"
+        }
+      }
+      
     }
-    
 
-    
     
 
   }
@@ -400,7 +485,26 @@ class ViewController: NSViewController {
       submitAnswer(self)
     }
   }
+  
+  func tintedImage(_ image: NSImage, tint: NSColor) -> NSImage {
+    guard let tinted = image.copy() as? NSImage else { return image }
+    tinted.lockFocus()
+    tint.set()
+    
+    let imageRect = NSRect(origin: NSZeroPoint, size: image.size)
+    NSRectFillUsingOperation(imageRect, .sourceAtop)
+    
+    tinted.unlockFocus()
+    return tinted
+  }
+  
 
 
 }
+
+/*
+ let tintColor = NSColor(red: 1.0, green: 0.08, blue: 0.50, alpha: 1.0)
+ let image = NSImage(named: "NAME").imageWithTintColor(tintColor)
+ imageView.image = image
+ */
 
