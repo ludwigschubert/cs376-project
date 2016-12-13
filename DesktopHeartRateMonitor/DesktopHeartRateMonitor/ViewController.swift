@@ -167,7 +167,10 @@ class ViewController: NSViewController {
       return
     case .Finished:
       infoLabel.stringValue = "Finished Calibration, press return to start."
-      return 
+      userMayContinue = true
+
+      
+      return
     }
   }
 
@@ -496,9 +499,10 @@ class ViewController: NSViewController {
   }
 
   func unpauseUI() {
-    seconds = 60
+    seconds = 120
     questionTextField.isHidden = false
     answerTextField.isHidden = false
+    answerTextField.isEnabled = true
     equalSign.isHidden = false
     timerLabel.isHidden = false
     infoLabel.isHidden = true
