@@ -43,20 +43,28 @@ class HeartRateManager : HeartRateSensorDelegate {
 
     switch calibrationStatus {
     case .NotYetStarted:
-      calibrationStatus = .Ongoing
-      //            print("calibrationStatusChanged: Ongoing")
-      NotificationCenter.default.post(name: .calibrationStatusChanged,
-                                      object: calibrationStatus)
+      if heartRateInfo.sensorDetected && bpm > 10 { // don't react on noise/unattached sensor
+        calibrationStatus = .Ongoing
+        //            print("calibrationStatusChanged: Ongoing")
+        NotificationCenter.default.post(name: .calibrationStatusChanged,
+                                        object: nil,
+                                        userInfo: ["calibrationStatus": calibrationStatus])
+      }
       break
     case .Ongoing:
       let σ = heartRateQueue.standardDeviation
       print("calibrationStatus: σ ", σ)
-      if true{//heartRateQueue.full() && σ < 8.0 {
+      if heartRateQueue.full && σ < 8.0 {
         baseHeartRate = heartRateQueue.average
         calibrationStatus = .Finished
         //                print("calibrationStatusChanged: Finished ", baseHeartRate!)
         NotificationCenter.default.post(name: .calibrationStatusChanged,
-                                        object: calibrationStatus)
+                                        object: nil,
+                                        userInfo: ["calibrationStatus": calibrationStatus])
+      } else {
+        NotificationCenter.default.post(name: .calibrationStatusChanged,
+                                        object: nil,
+                                        userInfo: ["calibrationStatus": calibrationStatus, "σ": σ])
       }
       break
     case .Finished:

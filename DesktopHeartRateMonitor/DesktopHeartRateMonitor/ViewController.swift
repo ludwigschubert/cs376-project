@@ -13,6 +13,8 @@ class ViewController: NSViewController {
 
   let lineChartData = LineChartData()
   let lineChartDataSet = LineChartDataSet(values: [ChartDataEntry(x: 1.0, y: 1.0)], label: "Heart Rate (bpm)")
+  let correctColor = NSColor(red:0.56, green:0.93, blue:0.56, alpha:1.0).cgColor
+  let wrongColor = NSColor(red:0.93, green:0.56, blue:0.56, alpha:1.0).cgColor
 
   var globalCounter : UInt64 = 0
   var setCounter : UInt64 = 0
@@ -27,9 +29,10 @@ class ViewController: NSViewController {
 
   let baseLineRounds : UInt64 = 3 //will actually be this number minus 1
   let isTreatmentCondition = UserDefaults.standard.value(forKey: "conditionIndex") as! Int == 1
-    let demonstrationMode = true //when demonstration mode is true it will always show the indicator
+  let demonstrationMode = true //when demonstration mode is true it will always show the indicator
 
   var bucket = 1
+  var userMayContinue = true // used for blocking UI during mandatory pause
 
   @IBOutlet var questionTextField: NSTextField!
   @IBOutlet var answerTextField: NSTextField!
@@ -40,8 +43,10 @@ class ViewController: NSViewController {
     didSet {
       if isPaused {
         pauseUI()
+        endSession()
       } else {
         unpauseUI()
+        startSession()
       }
     }
   }
@@ -105,6 +110,9 @@ class ViewController: NSViewController {
     countdownTimer = Timer.init(timeInterval: 1.0, target: self, selector: #selector(ViewController.timerWasFired), userInfo: nil, repeats: true)
     RunLoop.current.add(countdownTimer!, forMode: RunLoopMode.commonModes)
 
+    NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveCalibrationStatus),
+                                           name: Notification.Name.calibrationStatusChanged, object: nil)
+
     NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didReceiveHeartRate),
                                            name: Notification.Name.receivedHeartRate, object: nil)
 
@@ -113,8 +121,7 @@ class ViewController: NSViewController {
 
 //    print(UserDefaults.standard.value(forKey: "participantName"))
     timerLabel.stringValue = "\(seconds) seconds left"
-    infoLabel.stringValue = "Press return to start."
-
+    timerLabel.isHidden = true // hide timer during calibration
   }
 
   func applicationWillTerminateNotification() {
@@ -124,7 +131,8 @@ class ViewController: NSViewController {
   }
 
   override func viewWillAppear() {
-    pauseUI()
+    pauseUI() // sets up initial UI; doesn't end session
+    infoLabel.stringValue = "Put on Heart Rate Sensor"
   }
 
   //MARK: Respond to key events
@@ -142,6 +150,26 @@ class ViewController: NSViewController {
   }
 
   //MARK:- IBActions
+
+  func didReceiveCalibrationStatus(notification: Notification) {
+    guard let userInfo = notification.userInfo,
+          let calibrationStatus = userInfo["calibrationStatus"] as? CalibrationStatus else {
+        return
+    }
+
+    switch calibrationStatus {
+    case .NotYetStarted:
+      return
+    case .Ongoing:
+      if let σ = userInfo["σ"] as? Double {
+        infoLabel.stringValue = "Calibrating… (σ = \(σ))"
+      }
+      return
+    case .Finished:
+      infoLabel.stringValue = "Finished Calibration, press return to start."
+      return 
+    }
+  }
 
   func didReceiveHeartRate(notification: Notification) {
     guard let userInfo = notification.userInfo,
@@ -171,7 +199,7 @@ class ViewController: NSViewController {
     // Indicator Lights Stuff
     let dBmp = Double(hrInfo.heartRate)
     let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
-    var flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
+    let flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
     var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
     if isTreatmentCondition {
         greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
@@ -379,24 +407,26 @@ class ViewController: NSViewController {
 //    lineChartView.notifyDataSetChanged()
   }
 
-  @IBAction func submitAnswer(_ sender: Any) {
-    let originalLayerColor = self.view.layer?.backgroundColor
-
+  @IBAction func submitAnswer(_ sender: Any)
+  {
     let answer = answerTextField.stringValue.trimmingCharacters(in: .whitespaces)
     let gotAnswerCorrect = answer == currentQuestion.answer
     let duration = -currentStartTime.timeIntervalSinceNow
+    self.answerTextField.isEnabled = false
 
     if gotAnswerCorrect {
-      self.view.layer?.backgroundColor = NSColor(red:0.56, green:0.93, blue:0.56, alpha:1.0).cgColor
+      self.view.layer?.backgroundColor = correctColor
     } else {
-      self.view.layer?.backgroundColor = NSColor(red:0.93, green:0.56, blue:0.56, alpha:1.0).cgColor
+      self.view.layer?.backgroundColor = wrongColor
     }
     heartRateSession.record(date: Date(), duration: duration, answer: answer, correct: gotAnswerCorrect, set: Int(setCounter))
 
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1),
                                   execute: {
-                                    self.view.layer?.backgroundColor = originalLayerColor;
-                                    if !self.answerTextField.isHidden {
+                                    self.view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor;
+                                    if !self.isPaused {
+                                      self.answerTextField.isEnabled = true
+                                      self.view.window?.makeFirstResponder(self.answerTextField)
                                       if let question = self.questionsIterator.next() {
                                         if gotAnswerCorrect {
                                           self.show(question: question)
@@ -407,17 +437,6 @@ class ViewController: NSViewController {
                                     }
     })
 
-  }
-
-  @IBAction func saveButtonWasPressed(_ sender: NSButtonCell)
-  {
-//    heartRateSession.participantName = participantNameTextField.stringValue
-    heartRateSession.end()
-    HeartRateSessionWriter.write(heartRateSession: heartRateSession)
-    self.heartRateSession = HeartRateSession.init()
-    lineChartDataSet.values = [];
-    lineChartData.notifyDataChanged()
-    lineChartView.notifyDataSetChanged()
   }
 
   //MARK:- Internal
@@ -446,7 +465,10 @@ class ViewController: NSViewController {
     } else {
       timerLabel.isHidden = true
       print("End of last session")
-      self.view.window?.close()
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(5),
+                                    execute: {
+                                      self.view.window?.close()
+      })
     }
   }
 
@@ -464,8 +486,13 @@ class ViewController: NSViewController {
     infoLabel.isHidden = false
     answerTextField.resignFirstResponder()
     view.window?.makeFirstResponder(self)
-
-    endSession()
+    userMayContinue = false
+    infoLabel.stringValue = "Take a pause…"
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(15),
+                                  execute: {
+                                    self.userMayContinue = true
+                                    self.infoLabel.stringValue = "Press return to continue when you're ready."
+    })
   }
 
   func unpauseUI() {
@@ -476,37 +503,16 @@ class ViewController: NSViewController {
     timerLabel.isHidden = false
     infoLabel.isHidden = true
     view.window?.makeFirstResponder(answerTextField)
-
-    startSession()
   }
 
   func returnWasPressed() {
     if isPaused {
-      isPaused = false
-    } else {
+      if userMayContinue {
+        isPaused = false
+      }
+    } else if self.answerTextField.isEnabled {
       submitAnswer(self)
     }
   }
-  
-  func tintedImage(_ image: NSImage, tint: NSColor) -> NSImage {
-    guard let tinted = image.copy() as? NSImage else { return image }
-    tinted.lockFocus()
-    tint.set()
-    
-    let imageRect = NSRect(origin: NSZeroPoint, size: image.size)
-    NSRectFillUsingOperation(imageRect, .sourceAtop)
-    
-    tinted.unlockFocus()
-    return tinted
-  }
-  
-
 
 }
-
-/*
- let tintColor = NSColor(red: 1.0, green: 0.08, blue: 0.50, alpha: 1.0)
- let image = NSImage(named: "NAME").imageWithTintColor(tintColor)
- imageView.image = image
- */
-
