@@ -506,7 +506,7 @@ class ViewController: NSViewController {
   }
 
   func unpauseUI() {
-    seconds = 5
+    seconds = 120
     questionTextField.isHidden = false
     answerTextField.isHidden = false
     answerTextField.isEnabled = true
