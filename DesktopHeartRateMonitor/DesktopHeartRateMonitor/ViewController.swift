@@ -498,7 +498,7 @@ class ViewController: NSViewController {
     view.window?.makeFirstResponder(self)
     userMayContinue = false
     infoLabel.stringValue = "Take a pause…"
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(15),
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(20),
                                   execute: {
                                     self.userMayContinue = true
                                     self.infoLabel.stringValue = "Press return to continue when you're ready."
