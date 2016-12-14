@@ -222,18 +222,25 @@ class ViewController: NSViewController {
     imageView5.image = image
     
     
-    if demonstrationMode == false {
-      imageView1.isHidden = setCounter < baseLineRounds
-      imageView2.isHidden = setCounter < baseLineRounds
-      imageView3.isHidden = setCounter < baseLineRounds
-      imageView4.isHidden = setCounter < baseLineRounds
-      imageView5.isHidden = setCounter < baseLineRounds
+//    if demonstrationMode == false {
+//      imageView1.isHidden = setCounter < baseLineRounds
+//      imageView2.isHidden = setCounter < baseLineRounds
+//      imageView3.isHidden = setCounter < baseLineRounds
+//      imageView4.isHidden = setCounter < baseLineRounds
+//      imageView5.isHidden = setCounter < baseLineRounds
+//      
+//    }
+    if !isTreatmentCondition {
+      imageView1.isHidden = true
+      imageView2.isHidden = true
+      imageView3.isHidden = true
+      imageView4.isHidden = true
+      imageView5.isHidden = true
       
-    }
-    //number of rounds to hide the touchbar indicator
-    if demonstrationMode == true || setCounter > baseLineRounds-1 {
+    } else {
 
-      
+      //before wasn't else and was "if demonstrationMode == true || setCounter > baseLineRounds-1 {"
+
       var newBucket = 1
       if dBmp > 0.8 * average {
         self.imageView1.image = greenImage
@@ -499,7 +506,7 @@ class ViewController: NSViewController {
   }
 
   func unpauseUI() {
-    seconds = 120
+    seconds = 5
     questionTextField.isHidden = false
     answerTextField.isHidden = false
     answerTextField.isEnabled = true
