@@ -167,7 +167,10 @@ class ViewController: NSViewController {
       return
     case .Finished:
       infoLabel.stringValue = "Finished Calibration, press return to start."
-      return 
+      userMayContinue = true
+
+      
+      return
     }
   }
 
@@ -533,7 +536,7 @@ class ViewController: NSViewController {
     view.window?.makeFirstResponder(self)
     userMayContinue = false
     infoLabel.stringValue = "Take a pause…"
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(15),
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(20),
                                   execute: {
                                     self.userMayContinue = true
                                     self.infoLabel.stringValue = "Press return to continue when you're ready."
@@ -541,9 +544,10 @@ class ViewController: NSViewController {
   }
 
   func unpauseUI() {
-    seconds = 60
+    seconds = 120
     questionTextField.isHidden = false
     answerTextField.isHidden = false
+    answerTextField.isEnabled = true
     equalSign.isHidden = false
     timerLabel.isHidden = false
     infoLabel.isHidden = true
