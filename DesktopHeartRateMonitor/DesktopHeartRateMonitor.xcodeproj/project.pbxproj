@@ -12,6 +12,19 @@
 		021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */; };
 		023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023A54BC1DEA87D900A2A726 /* SetupViewController.swift */; };
 		025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */; };
+		026A3CFB1E0236DB000306BF /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF21E0236DB000306BF /* Arithmetic.swift */; };
+		026A3CFC1E0236DB000306BF /* Convolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF31E0236DB000306BF /* Convolution.swift */; };
+		026A3CFD1E0236DB000306BF /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF41E0236DB000306BF /* Auxiliary.swift */; };
+		026A3CFE1E0236DB000306BF /* Exponential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF51E0236DB000306BF /* Exponential.swift */; };
+		026A3CFF1E0236DB000306BF /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF61E0236DB000306BF /* FFT.swift */; };
+		026A3D001E0236DB000306BF /* Hyperbolic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF71E0236DB000306BF /* Hyperbolic.swift */; };
+		026A3D011E0236DB000306BF /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF81E0236DB000306BF /* Matrix.swift */; };
+		026A3D021E0236DB000306BF /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CF91E0236DB000306BF /* Power.swift */; };
+		026A3D031E0236DB000306BF /* Trigonometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3CFA1E0236DB000306BF /* Trigonometric.swift */; };
+		026A3D081E03032F000306BF /* SpectrumAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3D051E03032F000306BF /* SpectrumAnalyzer.swift */; };
+		026A3D091E03032F000306BF /* SampleInterpolator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3D061E03032F000306BF /* SampleInterpolator.swift */; };
+		026A3D0A1E03032F000306BF /* SpectrumData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3D071E03032F000306BF /* SpectrumData.swift */; };
+		026A3D0C1E03073A000306BF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A3D0B1E03073A000306BF /* Constants.swift */; };
 		026E7F261DE3ACA800EBA6B2 /* HeartRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */; };
 		026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */; };
 		026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */; };
@@ -82,6 +95,19 @@
 		021E1E691DE521A50056F1E9 /* TouchBarIdentifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarIdentifiers.swift; sourceTree = "<group>"; };
 		023A54BC1DEA87D900A2A726 /* SetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupViewController.swift; sourceTree = "<group>"; };
 		025DBDF41DE6714800C69FEC /* NSImage+TintColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+TintColor.swift"; sourceTree = "<group>"; };
+		026A3CF21E0236DB000306BF /* Arithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
+		026A3CF31E0236DB000306BF /* Convolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convolution.swift; sourceTree = "<group>"; };
+		026A3CF41E0236DB000306BF /* Auxiliary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auxiliary.swift; sourceTree = "<group>"; };
+		026A3CF51E0236DB000306BF /* Exponential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exponential.swift; sourceTree = "<group>"; };
+		026A3CF61E0236DB000306BF /* FFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		026A3CF71E0236DB000306BF /* Hyperbolic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hyperbolic.swift; sourceTree = "<group>"; };
+		026A3CF81E0236DB000306BF /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		026A3CF91E0236DB000306BF /* Power.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
+		026A3CFA1E0236DB000306BF /* Trigonometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigonometric.swift; sourceTree = "<group>"; };
+		026A3D051E03032F000306BF /* SpectrumAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectrumAnalyzer.swift; sourceTree = "<group>"; };
+		026A3D061E03032F000306BF /* SampleInterpolator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleInterpolator.swift; sourceTree = "<group>"; };
+		026A3D071E03032F000306BF /* SpectrumData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpectrumData.swift; sourceTree = "<group>"; };
+		026A3D0B1E03073A000306BF /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateManager.swift; sourceTree = "<group>"; };
 		026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHeartRateSensor.swift; sourceTree = "<group>"; };
 		026E7F2C1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartRateStatusBarController.swift; sourceTree = "<group>"; };
@@ -129,6 +155,7 @@
 		021E1E631DE513CC0056F1E9 /* Sensing */ = {
 			isa = PBXGroup;
 			children = (
+				026A3D041E030316000306BF /* Frequency Domain Stuff */,
 				02734A991DD0412500430705 /* HeartRateSensor.swift */,
 				026E7F2A1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift */,
 				026E7F251DE3ACA800EBA6B2 /* HeartRateManager.swift */,
@@ -166,6 +193,33 @@
 			name = StatusBar;
 			sourceTree = "<group>";
 		};
+		026A3CF11E0236CB000306BF /* Surge */ = {
+			isa = PBXGroup;
+			children = (
+				026A3CF21E0236DB000306BF /* Arithmetic.swift */,
+				026A3CF31E0236DB000306BF /* Convolution.swift */,
+				026A3CF41E0236DB000306BF /* Auxiliary.swift */,
+				026A3CF51E0236DB000306BF /* Exponential.swift */,
+				026A3CF61E0236DB000306BF /* FFT.swift */,
+				026A3CF71E0236DB000306BF /* Hyperbolic.swift */,
+				026A3CF81E0236DB000306BF /* Matrix.swift */,
+				026A3CF91E0236DB000306BF /* Power.swift */,
+				026A3CFA1E0236DB000306BF /* Trigonometric.swift */,
+			);
+			name = Surge;
+			sourceTree = "<group>";
+		};
+		026A3D041E030316000306BF /* Frequency Domain Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				026A3D051E03032F000306BF /* SpectrumAnalyzer.swift */,
+				026A3D061E03032F000306BF /* SampleInterpolator.swift */,
+				026A3D071E03032F000306BF /* SpectrumData.swift */,
+				026A3D0B1E03073A000306BF /* Constants.swift */,
+			);
+			name = "Frequency Domain Stuff";
+			sourceTree = "<group>";
+		};
 		02F060E01DC6E74000740F87 = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +246,7 @@
 				021E1E621DE513BE0056F1E9 /* Model */,
 				021E1E641DE513F00056F1E9 /* View */,
 				02F060F01DC6E74000740F87 /* Assets.xcassets */,
+				026A3CF11E0236CB000306BF /* Surge */,
 				02F060F21DC6E74000740F87 /* Main.storyboard */,
 				02F060F51DC6E74000740F87 /* Info.plist */,
 				027A37221DFDFFB80005CC27 /* Array+statistics.swift */,
@@ -254,7 +309,7 @@
 				TargetAttributes = {
 					02F060E81DC6E74000740F87 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = EVX98G2B7C;
+						DevelopmentTeam = CD6WSVH5P2;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -326,21 +381,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				02734A9A1DD0412500430705 /* HeartRateSensor.swift in Sources */,
+				026A3CFE1E0236DB000306BF /* Exponential.swift in Sources */,
 				839B47ED1DE5238400333AC3 /* WindowController.swift in Sources */,
 				026E7F2D1DE3EAAA00EBA6B2 /* HeartRateStatusBarController.swift in Sources */,
 				025DBDF51DE6714800C69FEC /* NSImage+TintColor.swift in Sources */,
+				026A3D0C1E03073A000306BF /* Constants.swift in Sources */,
 				027A37271DFE0B6C0005CC27 /* Date+iso8601.swift in Sources */,
+				026A3D001E0236DB000306BF /* Hyperbolic.swift in Sources */,
 				023A54BD1DEA87D900A2A726 /* SetupViewController.swift in Sources */,
 				839B47EF1DE55CBD00333AC3 /* TouchBarNonInterferingControls.swift in Sources */,
 				021A47D51DC91F7700B980E7 /* Question.swift in Sources */,
 				02F061011DC6F0D900740F87 /* HeartRateSessionWriter.swift in Sources */,
+				026A3CFB1E0236DB000306BF /* Arithmetic.swift in Sources */,
 				02F060FF1DC6F0CC00740F87 /* HeartRateSession.swift in Sources */,
+				026A3CFF1E0236DB000306BF /* FFT.swift in Sources */,
+				026A3D031E0236DB000306BF /* Trigonometric.swift in Sources */,
+				026A3CFC1E0236DB000306BF /* Convolution.swift in Sources */,
 				026E7F261DE3ACA800EBA6B2 /* HeartRateManager.swift in Sources */,
 				021E1E5F1DE50A870056F1E9 /* ViewControllerTouchBarExtension.swift in Sources */,
+				026A3CFD1E0236DB000306BF /* Auxiliary.swift in Sources */,
+				026A3D081E03032F000306BF /* SpectrumAnalyzer.swift in Sources */,
 				026E7F2B1DE3BD9900EBA6B2 /* FakeHeartRateSensor.swift in Sources */,
 				027A37231DFDFFB80005CC27 /* Array+statistics.swift in Sources */,
+				026A3D011E0236DB000306BF /* Matrix.swift in Sources */,
 				02F060EF1DC6E74000740F87 /* ViewController.swift in Sources */,
+				026A3D091E03032F000306BF /* SampleInterpolator.swift in Sources */,
+				026A3D021E0236DB000306BF /* Power.swift in Sources */,
 				021E1E6A1DE521A50056F1E9 /* TouchBarIdentifiers.swift in Sources */,
+				026A3D0A1E03032F000306BF /* SpectrumData.swift in Sources */,
 				02F060ED1DC6E74000740F87 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,7 +534,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
@@ -487,7 +555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EVX98G2B7C;
+				DEVELOPMENT_TEAM = CD6WSVH5P2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",

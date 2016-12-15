@@ -45,7 +45,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     heartRateSensor.connect()
   }
 
-
-
 }
 

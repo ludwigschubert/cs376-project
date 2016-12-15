@@ -181,230 +181,275 @@ class ViewController: NSViewController {
     }
     globalCounter += 1
     heartRateSession.record(heartRateInfo: hrInfo);
-    let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(hrInfo.heartRate))
-    if lineChartDataSet.addEntry(chartDataEntry) {
-      if lineChartDataSet.entryCount > 11 {
-        let removedSuccesfully = lineChartDataSet.removeFirst()
-        if !removedSuccesfully {
-          print("WTF")
-        }
-      }
-    }
-    lineChartData.notifyDataChanged()
-    lineChartView.notifyDataSetChanged()
+//    let chartDataEntry = ChartDataEntry(x: Double(globalCounter), y: Double(hrInfo.heartRate))
+//    if lineChartDataSet.addEntry(chartDataEntry) {
+//      if lineChartDataSet.entryCount > 11 {
+//        let removedSuccesfully = lineChartDataSet.removeFirst()
+//        if !removedSuccesfully {
+//          print("WTF")
+//        }
+//      }
+//    }
+//    lineChartData.notifyDataChanged()
+//    lineChartView.notifyDataSetChanged()
+//
+//    lineChartView.layer?.cornerRadius = 6;
+//    lineChartView.layer?.masksToBounds = true;
+//
+//    // Indicator Lights Stuff
+//    let dBmp = Double(hrInfo.heartRate)
+//    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
+//    let flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
+//    var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
+//    if isTreatmentCondition {
+//        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
+////      flashImage = flashImage.tinted(color: NSColor(red: 153.0, green: 255.0, blue: 102.0, alpha: 1.0))
+//      
+//          
+////          tintedImage(#imageLiteral(resourceName: "HeartRateIndicatorLight5"), tint: )
+//    } else {
+//        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
+////        (calibratedRed: 242.0, green: 153.0, blue: 199.0, alpha:1.0))
+//    }
+//    
+//    imageView1.image = image
+//    imageView2.image = image
+//    imageView3.image = image
+//    imageView4.image = image
+//    imageView5.image = image
+//    
+//    
+//    if demonstrationMode == false {
+//      imageView1.isHidden = setCounter < baseLineRounds
+//      imageView2.isHidden = setCounter < baseLineRounds
+//      imageView3.isHidden = setCounter < baseLineRounds
+//      imageView4.isHidden = setCounter < baseLineRounds
+//      imageView5.isHidden = setCounter < baseLineRounds
+//      
+//    }
+//    //number of rounds to hide the touchbar indicator
+//    if demonstrationMode == true || setCounter > baseLineRounds-1 {
+//
+//      
+//      var newBucket = 1
+//      if dBmp > 0.8 * average {
+//        self.imageView1.image = greenImage
+//      }
+//      
+//      if dBmp > 0.9 * average {
+//        newBucket = 2
+//        self.imageView2.image = greenImage
+//      }
+//      
+//      if dBmp > 1.0 * average {
+//        newBucket = 3
+//        self.imageView3.image = greenImage
+//      }
+//      
+//      if dBmp > 1.1 * average {
+//        newBucket = 4
+//        self.imageView4.image = greenImage
+//      }
+//      
+//      if dBmp > 1.2 * average {
+//        newBucket = 5
+//        self.imageView5.image = greenImage
+//      }
+//      
+//      if newBucket != bucket {
+//        NSSound(named: "Pop")?.play() // we can play around with different sounds
+//        
+//        //NSBeep()
+//        //later implementation can have different sound for different levels or going up vs. going down
+//      }
+//      
+//      let delay = 0.18
+//      switch newBucket {
+//      case 1:
+//        imageView1.image = flashImage
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          
+//        }
+//      case 2:
+//        imageView1.image = flashImage
+//        imageView2.image = flashImage
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          self.imageView2.image = greenImage
+//        }
+//      case 3:
+//        imageView1.image = flashImage
+//        imageView2.image = flashImage
+//        imageView3.image = flashImage
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          self.imageView2.image = greenImage
+//          self.imageView3.image = greenImage
+//        }
+//      case 4:
+//        imageView1.image = flashImage
+//        imageView2.image = flashImage
+//        imageView3.image = flashImage
+//        imageView4.image = flashImage
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          self.imageView2.image = greenImage
+//          self.imageView3.image = greenImage
+//          self.imageView4.image = greenImage
+//        }
+//      case 5:
+//        imageView1.image = flashImage
+//        imageView2.image = flashImage
+//        imageView3.image = flashImage
+//        imageView4.image = flashImage
+//        imageView5.image = flashImage
+//        
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          self.imageView2.image = greenImage
+//          self.imageView3.image = greenImage
+//          self.imageView4.image = greenImage
+//          self.imageView5.image = greenImage
+//        }
+//      default:
+//        imageView1.image = flashImage
+//        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+//        DispatchQueue.main.asyncAfter(deadline: when) {
+//          self.imageView1.image = greenImage
+//          
+//        }
+//      }
 
-    lineChartView.layer?.cornerRadius = 6;
-    lineChartView.layer?.masksToBounds = true;
-
-    // Indicator Lights Stuff
-    let dBmp = Double(hrInfo.heartRate)
-    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
-    let flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
-    var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
-    if isTreatmentCondition {
-        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
-//      flashImage = flashImage.tinted(color: NSColor(red: 153.0, green: 255.0, blue: 102.0, alpha: 1.0))
       
-          
-//          tintedImage(#imageLiteral(resourceName: "HeartRateIndicatorLight5"), tint: )
-    } else {
-        greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
-//        (calibratedRed: 242.0, green: 153.0, blue: 199.0, alpha:1.0))
-    }
-    
-    imageView1.image = image
-    imageView2.image = image
-    imageView3.image = image
-    imageView4.image = image
-    imageView5.image = image
-    
-    
-    if demonstrationMode == false {
-      imageView1.isHidden = setCounter < baseLineRounds
-      imageView2.isHidden = setCounter < baseLineRounds
-      imageView3.isHidden = setCounter < baseLineRounds
-      imageView4.isHidden = setCounter < baseLineRounds
-      imageView5.isHidden = setCounter < baseLineRounds
-      
-    }
-    //number of rounds to hide the touchbar indicator
-    if demonstrationMode == true || setCounter > baseLineRounds-1 {
-
-      
-      var newBucket = 1
-      if dBmp > 0.8 * average {
-        self.imageView1.image = greenImage
-      }
-      
-      if dBmp > 0.9 * average {
-        newBucket = 2
-        self.imageView2.image = greenImage
-      }
-      
-      if dBmp > 1.0 * average {
-        newBucket = 3
-        self.imageView3.image = greenImage
-      }
-      
-      if dBmp > 1.1 * average {
-        newBucket = 4
-        self.imageView4.image = greenImage
-      }
-      
-      if dBmp > 1.2 * average {
-        newBucket = 5
-        self.imageView5.image = greenImage
-      }
-      
-      if newBucket != bucket {
-        NSSound(named: "Pop")?.play() // we can play around with different sounds
-        
-        //NSBeep()
-        //later implementation can have different sound for different levels or going up vs. going down
-      }
-      
-      let delay = 0.18
-      switch newBucket {
-      case 1:
-        imageView1.image = flashImage
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          
-        }
-      case 2:
-        imageView1.image = flashImage
-        imageView2.image = flashImage
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          self.imageView2.image = greenImage
-        }
-      case 3:
-        imageView1.image = flashImage
-        imageView2.image = flashImage
-        imageView3.image = flashImage
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          self.imageView2.image = greenImage
-          self.imageView3.image = greenImage
-        }
-      case 4:
-        imageView1.image = flashImage
-        imageView2.image = flashImage
-        imageView3.image = flashImage
-        imageView4.image = flashImage
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          self.imageView2.image = greenImage
-          self.imageView3.image = greenImage
-          self.imageView4.image = greenImage
-        }
-      case 5:
-        imageView1.image = flashImage
-        imageView2.image = flashImage
-        imageView3.image = flashImage
-        imageView4.image = flashImage
-        imageView5.image = flashImage
-        
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          self.imageView2.image = greenImage
-          self.imageView3.image = greenImage
-          self.imageView4.image = greenImage
-          self.imageView5.image = greenImage
-        }
-      default:
-        imageView1.image = flashImage
-        let when = DispatchTime.now() + delay // change 2 to desired number of seconds
-        DispatchQueue.main.asyncAfter(deadline: when) {
-          self.imageView1.image = greenImage
-          
-        }
-      }
-      
-      
-      bucket = newBucket
-      
-      
-      if dBmp > 1.2 * average {
-        if isTreatmentCondition {
-          
-          touchBarLabelString = "Alertness: SUPER HIGH"
-        } else {
-          touchBarLabelString = "   Stress: SUPER HIGH"
-        }
-      } else if dBmp > 1.1 * average {
-        if isTreatmentCondition {
-          touchBarLabelString = "      Alertness: HIGH"
-        } else {
-          touchBarLabelString = "         Stress: HIGH"
-        }
-      } else if dBmp > 1.0 * average {
-        if isTreatmentCondition {
-          touchBarLabelString = "    Alertness: NORMAL"
-        } else {
-          touchBarLabelString = "       Stress: NORMAL"
-        }
-      } else if dBmp > 0.9 * average {
-        
-        if isTreatmentCondition {
-          touchBarLabelString = "       Alertness: LOW"
-        } else {
-          touchBarLabelString = "          Stress: LOW"
-        }
-      } else if dBmp > 0.8 * average {
-        if isTreatmentCondition {
-          touchBarLabelString = " Alertness: SUPER LOW"
-        } else {
-          touchBarLabelString = "    Stress: SUPER LOW"
-        }
-      }
-      
-    }
+//      bucket = newBucket
+//      
+//      
+//      if dBmp > 1.2 * average {
+//        if isTreatmentCondition {
+//          
+//          touchBarLabelString = "Alertness: SUPER HIGH"
+//        } else {
+//          touchBarLabelString = "   Stress: SUPER HIGH"
+//        }
+//      } else if dBmp > 1.1 * average {
+//        if isTreatmentCondition {
+//          touchBarLabelString = "      Alertness: HIGH"
+//        } else {
+//          touchBarLabelString = "         Stress: HIGH"
+//        }
+//      } else if dBmp > 1.0 * average {
+//        if isTreatmentCondition {
+//          touchBarLabelString = "    Alertness: NORMAL"
+//        } else {
+//          touchBarLabelString = "       Stress: NORMAL"
+//        }
+//      } else if dBmp > 0.9 * average {
+//        
+//        if isTreatmentCondition {
+//          touchBarLabelString = "       Alertness: LOW"
+//        } else {
+//          touchBarLabelString = "          Stress: LOW"
+//        }
+//      } else if dBmp > 0.8 * average {
+//        if isTreatmentCondition {
+//          touchBarLabelString = " Alertness: SUPER LOW"
+//        } else {
+//          touchBarLabelString = "    Stress: SUPER LOW"
+//        }
+//      }
+//      
+//    }
 
     
 
   }
 
   func didReceiveHeartRateStatus(notification: Notification) {
-//    let userInfo = notification.userInfo!
-//    let heartRateStatus = userInfo["heartRateStatus"] as! HeartRateStatus
+    guard let userInfo = notification.userInfo,
+      let lfhfStatus = userInfo["heartRateStatus"] as? HeartRateStatus else {
+        print("didReceiveHeartRateStatus preconditions not satisfied!!!")
+        return
+    }
+    let delay = 0.18
+    let image = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.darkGray)
+    let flashImage = #imageLiteral(resourceName: "HeartRateIndicatorFlashGreen")
+    var greenImage : NSImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5")
+    if isTreatmentCondition {
+      greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.green)
+    } else {
+      greenImage = #imageLiteral(resourceName: "HeartRateIndicatorLight5").tinted(color: NSColor.red)
+    }
+    imageView1.image = image
+    imageView2.image = image
+    imageView3.image = image
+    imageView4.image = image
+    imageView5.image = image
 
-    // LineChart Stuff
-//    var color = NSColor.white
-//    if setCounter >= baseLineRounds {
-//        switch heartRateStatus {
-//        case .Low:
-//            color = NSColor.green
-//            //TODO: change text and have this disappear during first 2 rounds
-//            //TODO: if grey round just give heart rate
-//            if isTreatmentCondition {
-//                touchBarLabelString = "Heart low"
-//            } else {
-//                touchBarLabelString = "😴 You're not giving it your best…"
-//            }
-//            break
-//        case .High:
-//            color = NSColor.red
-//            if isTreatmentCondition {
-//                touchBarLabelString = "Heart rate high"
-//            } else {
-//                touchBarLabelString = "😎 You're getting pumped!"
-//            }
-//            break
-//        default: //.Normal
-//            touchBarLabelString = ""
-//            break
-//        }
-//    }
-    
-//    lineChartDataSet.colors = [color]
-//    lineChartDataSet.fillColor = color
-//    lineChartView.notifyDataSetChanged()
+    switch lfhfStatus {
+    case .VeryLow:
+      imageView1.image = flashImage
+      touchBarLabelString = "Alertness: very low"
+      let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.imageView1.image = greenImage
+
+      }
+    case .Low:
+      touchBarLabelString = "Alertness: low"
+      imageView1.image = flashImage
+      imageView2.image = flashImage
+      let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.imageView1.image = greenImage
+        self.imageView2.image = greenImage
+      }
+    case .Normal:
+      touchBarLabelString = "Alertness: normal"
+      imageView1.image = flashImage
+      imageView2.image = flashImage
+      imageView3.image = flashImage
+      let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.imageView1.image = greenImage
+        self.imageView2.image = greenImage
+        self.imageView3.image = greenImage
+      }
+    case .High:
+      touchBarLabelString = "Alertness: high"
+      imageView1.image = flashImage
+      imageView2.image = flashImage
+      imageView3.image = flashImage
+      imageView4.image = flashImage
+      let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.imageView1.image = greenImage
+        self.imageView2.image = greenImage
+        self.imageView3.image = greenImage
+        self.imageView4.image = greenImage
+      }
+    case .VeryHigh:
+      touchBarLabelString = "Alertness: very high"
+      imageView1.image = flashImage
+      imageView2.image = flashImage
+      imageView3.image = flashImage
+      imageView4.image = flashImage
+      imageView5.image = flashImage
+
+      let when = DispatchTime.now() + delay // change 2 to desired number of seconds
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.imageView1.image = greenImage
+        self.imageView2.image = greenImage
+        self.imageView3.image = greenImage
+        self.imageView4.image = greenImage
+        self.imageView5.image = greenImage
+      }
+    }
   }
 
   @IBAction func submitAnswer(_ sender: Any)

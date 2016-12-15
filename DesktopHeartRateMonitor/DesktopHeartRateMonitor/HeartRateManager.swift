@@ -15,9 +15,11 @@ extension Notification.Name {
 }
 
 enum HeartRateStatus {
+  case VeryLow
   case Low
   case Normal
   case High
+  case VeryHigh
 }
 
 enum CalibrationStatus {
@@ -29,102 +31,102 @@ enum CalibrationStatus {
 class HeartRateManager : HeartRateSensorDelegate {
 
   private let surgeMultiplicator = 1.0 + 0.2
-  private var baseHeartRate : Double?
+  private var baseLFHFRatio : Double?
   private var calibrationStatus = CalibrationStatus.NotYetStarted
-  private var heartRateStatus = HeartRateStatus.Normal
-  private let heartRateQueue = HeartRateQueue()
+  private var lfhfRatioStatus = HeartRateStatus.Normal
+  private let windowSize = 150
+  private var heartRateHistory : [Double] = []
+  private var rrHistory : [Double] = []
+  private let concurrentQueue = DispatchQueue(label: "spectrum-analysis", attributes: .concurrent)
+  private let nc = NotificationCenter.default
 
   //MARK:- HeartRateSensorDelegate Methods
 
   func didReceive(heartRateInfo: HeartRateInfo, sender: HeartRateSensor)
   {
-    let bpm = heartRateInfo.heartRate
-    heartRateQueue.record(bpm: bpm)
+    heartRateHistory.append(Double(heartRateInfo.heartRate))
+    rrHistory.append(Double(heartRateInfo.rr))
+
+    if rrHistory.count >= windowSize && heartRateHistory.count % 5 == 0 {
+      analyzeLFHFRatio()
+    }
 
     switch calibrationStatus {
     case .NotYetStarted:
-      if heartRateInfo.sensorDetected && bpm > 10 { // don't react on noise/unattached sensor
-        calibrationStatus = .Ongoing
-        //            print("calibrationStatusChanged: Ongoing")
-        NotificationCenter.default.post(name: .calibrationStatusChanged,
-                                        object: nil,
-                                        userInfo: ["calibrationStatus": calibrationStatus])
-      }
+      calibrationStatus = .Ongoing
+      nc.post(name: .calibrationStatusChanged, object: nil,
+              userInfo: ["calibrationStatus": calibrationStatus])
       break
     case .Ongoing:
-      let σ = heartRateQueue.standardDeviation
-      print("calibrationStatus: σ ", σ)
-      if heartRateQueue.full && σ < 8.0 {
-        baseHeartRate = heartRateQueue.average
-        calibrationStatus = .Finished
-        //                print("calibrationStatusChanged: Finished ", baseHeartRate!)
-        NotificationCenter.default.post(name: .calibrationStatusChanged,
-                                        object: nil,
-                                        userInfo: ["calibrationStatus": calibrationStatus])
-      } else {
-        NotificationCenter.default.post(name: .calibrationStatusChanged,
-                                        object: nil,
-                                        userInfo: ["calibrationStatus": calibrationStatus, "σ": σ])
-      }
+      nc.post(name: .calibrationStatusChanged, object: nil,
+              userInfo: ["calibrationStatus": calibrationStatus, "σ": heartRateInfo.rr])
       break
     case .Finished:
-      let newHeartRateStatus = heartRateStatus(bpm: bpm)
-      if newHeartRateStatus != heartRateStatus {
-        heartRateStatus = newHeartRateStatus
-        //                print("heartRateStatusChanged: ", heartRateStatus)
-        NotificationCenter.default.post(name: .heartRateStatusChanged,
-                                        object: nil,
-                                        userInfo: ["heartRateStatus": heartRateStatus])
-      }
-      NotificationCenter.default.post(name: .receivedHeartRate,
-                                      object: nil,
-                                      userInfo: ["heartRateInfo": heartRateInfo, "average": baseHeartRate!])
+      nc.post(name: .receivedHeartRate, object: nil,
+              userInfo: ["heartRateInfo": heartRateInfo, "average": baseLFHFRatio!])
       break
     }
   }
 
-  func heartRateStatus(bpm: Int) -> HeartRateStatus
+  func analyzeLFHFRatio() {
+    let rrSubset = Array(rrHistory.suffix(windowSize))
+//    print("Analyzing spectra on rrHistory with count \(rrHistory.count), windowed to \(rrSubset.count).")
+    concurrentQueue.async {
+      let spectrumData = SpectrumAnalyzer.process(rrSubset)
+      if let spectrumData = spectrumData {
+        DispatchQueue.main.async {
+          let lf = spectrumData.lf
+          let hf = spectrumData.hf
+          let lfhf = lf/hf
+          self.LFHFRatioWasUpdated(lfhfRatio: lfhf)
+        }
+      } else {
+        print("Error analyzing spectrum data!?")
+      }
+    }
+  }
+
+  func LFHFRatioWasUpdated(lfhfRatio: Double) {
+    if (baseLFHFRatio == nil) {
+      baseLFHFRatio = lfhfRatio
+    }
+
+    if calibrationStatus == .Ongoing {
+      calibrationStatus = .Finished
+      nc.post(name: .calibrationStatusChanged, object: nil,
+              userInfo: ["calibrationStatus": calibrationStatus])
+    }
+//    print("base", baseLFHFRatio!)
+//    print("now", lfhfRatio)
+
+    let newStatus = LFHFRatioStatus(lfhfRatio: lfhfRatio)
+    print(newStatus)
+    if newStatus != lfhfRatioStatus {
+      lfhfRatioStatus = newStatus
+      nc.post(name: .heartRateStatusChanged, object: nil,
+              userInfo: ["heartRateStatus": lfhfRatioStatus])
+
+    }
+
+  }
+
+  func LFHFRatioStatus(lfhfRatio: Double) -> HeartRateStatus
   {
-    guard let baseHeartRate = baseHeartRate else {
+    guard let baseLFHFRatio = baseLFHFRatio else {
       return HeartRateStatus.Normal
     }
 
-    if Double(bpm) > surgeMultiplicator * baseHeartRate {
-      return HeartRateStatus.High
-    } else if Double(bpm) < baseHeartRate * (1 - surgeMultiplicator) {
+    if lfhfRatio > 2 * baseLFHFRatio {
+      return HeartRateStatus.VeryLow
+    } else if lfhfRatio > 1.5 * baseLFHFRatio {
       return HeartRateStatus.Low
+    } else if lfhfRatio < baseLFHFRatio * 0.55 {
+      return HeartRateStatus.VeryHigh
+    } else if lfhfRatio < baseLFHFRatio * 0.7 {
+      return HeartRateStatus.High
     } else {
       return HeartRateStatus.Normal
     }
   }
 
-}
-
-class HeartRateQueue {
-
-  private let maxNumberOfHeartRates = 10
-  private var heartRateHistory : [Double] = []
-
-  func record(bpm: Int)
-  {
-    heartRateHistory.append(Double(bpm))
-    if heartRateHistory.count > maxNumberOfHeartRates {
-      heartRateHistory.remove(at: 0)
-    }
-  }
-
-  var full : Bool {
-    return heartRateHistory.count == maxNumberOfHeartRates
-  }
-
-  var average : Double {
-    return heartRateHistory.average
-  }
-
-  var standardDeviation : Double {
-    let length = Double(heartRateHistory.count)
-    let avg = heartRateHistory.average
-    let sumOfSquaredAvgDiff = heartRateHistory.map{ pow($0 - avg, 2.0) }.reduce(0, +)
-    return sqrt(sumOfSquaredAvgDiff / length)
-  }
 }
